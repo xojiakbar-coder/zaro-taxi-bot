@@ -1,0 +1,66 @@
+// src/pages/order/OrderPage.module.scss
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 40px 1rem;
+  min-height: 100vh;
+  color: #ccc;
+
+  @media (min-width: 768px) {
+    padding: 40px 2.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 40px 14rem;
+  }
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    font-size: 1.875rem;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 30px;
+  height: 100%;
+}
+
+.label {
+  display: flex;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.alert {
+  margin-top: 0.5rem;
+}
+
+.submitButton {
+  width: 100%;
+  margin-top: auto;
+}

@@ -1,0 +1,4 @@
+:root {
+  --max-height: calc(100dvh - 80px);
+  --full-height: 100dvh;
+}
