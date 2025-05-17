@@ -1,37 +1,15 @@
-import { useEffect } from 'react';
 import Card from '../../components/Card/Card';
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useList } from '../../modules/routes/index';
 import SpinnerLoader from '../../components/Loader/Spinner';
-import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const Home = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const { data, loading } = useList();
-  const [searchParams] = useSearchParams();
-  const id = searchParams.get('telegram_id');
 
   const handleCardClick = (id: number) => {
     navigate(`/order/${id}`);
   };
-
-  useEffect(() => {
-    const hash = location.hash;
-    console.log(hash, id);
-    const rawData = hash.replace('#tgWebAppData=', '');
-    const decoded = decodeURIComponent(rawData);
-    alert(`Decoded hash: ${decoded}`);
-
-    const params = new URLSearchParams(decoded);
-    const userRaw = params.get('user');
-
-    if (userRaw) {
-      const userJson = decodeURIComponent(userRaw);
-      const user = JSON.parse(userJson);
-      alert(`User object: ${String(user.id)}`);
-    }
-  }, [location]);
 
   if (loading) return <SpinnerLoader />;
 

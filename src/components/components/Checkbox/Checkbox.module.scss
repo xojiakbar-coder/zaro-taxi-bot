@@ -1,0 +1,135 @@
+.container {
+  position: relative;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  user-select: none !important;
+}
+
+.wrapper {
+  width: 22.3px;
+  height: 22.3px;
+  margin: 1.7px 1.7px 1.7px 1.7px;
+  border-radius: 5px;
+  border: 1px solid var(--dark-gray-40);
+  position: relative;
+  cursor: pointer;
+
+  &::before {
+    display: none;
+    z-index: 10;
+  }
+  &:hover {
+    border-color: var(--main-blue);
+  }
+  .icon {
+    visibility: hidden;
+  }
+
+  .label {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 0;
+    right: 0;
+    z-index: 1;
+  }
+
+  // checked holati uchun
+
+  &--checked {
+    .container {
+      height: 32px;
+      position: relative;
+    }
+
+    &.wrapper {
+      position: relative;
+      width: 26px;
+      height: 26px;
+      margin: 0px;
+      border: none;
+      border-radius: 5px;
+    }
+    &::before {
+      position: absolute;
+      display: block;
+      content: '';
+      width: 26px;
+      height: 26px;
+    }
+    .icon {
+      color: var(--main-blue);
+      visibility: inherit;
+      position: absolute;
+      cursor: not-allowed;
+      svg {
+        width: 26px;
+        height: 26px;
+      }
+    }
+
+    .label {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      z-index: 1;
+    }
+  }
+
+  // disabled holati uchun
+
+  &--disabled {
+    &.wrapper {
+      width: 22.3px;
+      height: 22.3px;
+      margin: 1.7px 1.7px 1.7px 1.7px;
+      border-radius: 5px;
+      border: 1px solid var(--dark-gray-40);
+      cursor: not-allowed !important;
+
+      &::before {
+        display: none;
+      }
+
+      &:hover {
+        border-color: var(--dark-gray-40);
+      }
+
+      &--checked {
+        &.wrapper {
+          position: relative;
+          width: 26px;
+          height: 26px;
+          margin: 0px;
+          border: none;
+          border-radius: 5px;
+        }
+        &::before {
+          position: absolute;
+          display: block;
+          content: '';
+          width: 26px;
+          height: 26px;
+        }
+        .icon {
+          color: var(--dark-gray-40);
+          visibility: inherit;
+          position: absolute;
+          svg {
+            width: 26px;
+            height: 26px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.label--disabled {
+  cursor: not-allowed !important;
+}

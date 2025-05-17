@@ -3,10 +3,13 @@ import type { AxiosPromise } from 'axios';
 import { http } from '../../common/services/';
 
 import * as Types from './types.ts';
+import { getTelegramUser } from './hooks/getTelegramUser.tsx';
 
-export const Create = ({ values }: { values: Types.IForm.Create }): AxiosPromise<Types.IApi.Single> =>
+const { id } = getTelegramUser();
+
+export const Create = ({ values }: { values: Types.IForm.Create }): AxiosPromise<Types.IApi.Single.Response> =>
   http.request.post(`/v1/room`, {
-    telegram_id: '',
+    telegram_id: id,
     is_delivery: values.is_delivery,
     ride_price: values.ride_price,
     cashback_used_percent: values.cashback_used_percent,
@@ -18,19 +21,5 @@ export const Create = ({ values }: { values: Types.IForm.Create }): AxiosPromise
     payment_type: values.payment_type
   });
 
-// export const Update = ({
-//   id,
-//   values
-// }: {
-//   id: number;
-//   values: Types.IForm.Update;
-// }): AxiosPromise<Types.IApi.Single.Response> =>
-//   http.request.put(`/v1/room/${id}`, {
-//     id,
-//     name: values.name,
-//     building_id: values.buildingId,
-//     floor_id: values.floorId
-//   });
-
-export const Delete = ({ id }: { id: number }): AxiosPromise<Types.IApi.Single> =>
+export const Delete = ({ id }: { id: number }): AxiosPromise<Types.IApi.Single.Response> =>
   http.request.delete(`/v1/room/${String(id)}`);
