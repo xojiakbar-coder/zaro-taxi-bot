@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
-@import "./base/variable.css";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import './base/variable.css';
 
 @tailwind base;
 @tailwind components;
@@ -12,10 +12,10 @@
   padding: 0;
   scrollbar-width: thin;
   box-sizing: border-box;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 body {
-  color: #fff;
+  color: #fff !important;
   background: #13110f !important;
 }

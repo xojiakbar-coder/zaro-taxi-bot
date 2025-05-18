@@ -12,10 +12,10 @@ export declare namespace IEntity {
   export interface Order {
     telegram_id: string;
     is_delivery: boolean;
-    ride_price: string;
-    cashback_used_percent: number;
+    ride_price: string | null;
+    cashback_used_percent: number | null;
     front_seat: boolean;
-    extra_luggage: string;
+    extra_luggage: string | null;
     is_cashback_used: boolean;
     car_type: 'Standart' | 'Comfort' | 'Biznes';
     date_of_departure: string;
@@ -23,7 +23,7 @@ export declare namespace IEntity {
   }
 
   export interface User {
-    id: number;
+    id: string;
     first_name?: string;
     last_name?: string;
     username?: string;

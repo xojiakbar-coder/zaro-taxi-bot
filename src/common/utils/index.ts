@@ -1,5 +1,5 @@
 export { default as convertHtmlToText } from './convertHtmlToText';
-export { default as currency } from './currency';
+// export { default as currency } from './currency';
 export { default as getApiError } from './getApiError';
 export { default as getInnerHTMLOfElement } from './getInnerHTMLOfElement';
 export { default as hideString } from './hideString';

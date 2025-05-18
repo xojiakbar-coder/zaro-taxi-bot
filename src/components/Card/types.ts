@@ -9,7 +9,7 @@ export interface Route {
   finish: Location;
 }
 
-export interface CardProps {
+export interface RoutesCardProps {
   id: number;
   start: string;
   finish: string;
@@ -17,3 +17,10 @@ export interface CardProps {
   onClick?: () => void;
 }
 
+export interface DriverCardProps {
+  id: number;
+  start: string;
+  finish: string;
+  className?: string;
+  onClick?: () => void;
+}
