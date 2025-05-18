@@ -11,6 +11,7 @@ export declare namespace IApi {
 export declare namespace IEntity {
   export interface Order {
     telegram_id: string;
+    route: number;
     is_delivery: boolean;
     ride_price: string | null;
     cashback_used_percent: number | null;
@@ -19,6 +20,31 @@ export declare namespace IEntity {
     is_cashback_used: boolean;
     car_type: 'Standart' | 'Comfort' | 'Biznes';
     date_of_departure: string;
+    payment_type: 'Cash' | 'Card';
+  }
+
+  interface Route {
+    id: number;
+    start: {
+      id: number;
+      name: string;
+    };
+    finish: {
+      id: number;
+      name: string;
+    };
+  }
+
+  interface MyOrders {
+    id: string;
+    route: Route;
+    created_at: string;
+    updated_at: boolean;
+    ride_price: string | null;
+    front_seat: boolean;
+    extra_luggage: string | null;
+    date_of_departure: string;
+    car_type: 'Standart' | 'Comfort' | 'Biznes';
     payment_type: 'Cash' | 'Card';
   }
 

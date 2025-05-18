@@ -14,6 +14,9 @@ const Home = () => {
 
   const handleCardClick = (id: number) => {
     navigate(`/order/${id}`);
+    if (id) {
+      localStorage.setItem('routeId', `${id}`);
+    }
   };
 
   if (loading) return <SpinnerLoader />;

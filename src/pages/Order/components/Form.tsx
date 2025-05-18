@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from '../Order.module.scss';
-import { TimeInput } from '@mantine/dates';
+import { TimeInput, DatePickerInput } from '@mantine/dates';
 import { Checkbox, Input, Radio } from '@mantine/core';
+import dayjs from 'dayjs';
 
 interface IProps {
   formData: any;
@@ -9,6 +10,22 @@ interface IProps {
 }
 
 const FormBody: React.FC<IProps> = ({ formData, setFormData }) => {
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const [selectedTime, setSelectedTime] = useState<Date | null>(new Date());
+
+  useEffect(() => {
+    if (selectedDate && selectedTime) {
+      const combined = dayjs(selectedDate).hour(dayjs(selectedTime).hour()).minute(dayjs(selectedTime).minute());
+
+      const formatted = combined.format('YYYY-MM-DDTHH:mm');
+
+      setFormData((prev: any) => ({
+        ...prev,
+        date_of_departure: formatted
+      }));
+    }
+  }, [selectedDate, selectedTime]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const target = e.target as HTMLInputElement;
     const { name, value, type, checked } = target;
@@ -23,7 +40,6 @@ const FormBody: React.FC<IProps> = ({ formData, setFormData }) => {
     <>
       <div className={classes.rowWrapper}>
         <Checkbox
-          type="checkbox"
           name="front_seat"
           checked={formData.front_seat}
           onChange={handleChange}
@@ -32,11 +48,10 @@ const FormBody: React.FC<IProps> = ({ formData, setFormData }) => {
         />
       </div>
 
-      <Input.Wrapper className={classes.columnWrapper} label="Qo‘shimcha yuk:" error="">
+      <Input.Wrapper className={classes.columnWrapper} label="Qo‘shimcha yuk:">
         <Input
           type="text"
           name="extra_luggage"
-          title="Qo‘shimcha yuk:"
           value={formData.extra_luggage}
           onChange={handleChange}
           className={classes.formInput}
@@ -46,7 +61,6 @@ const FormBody: React.FC<IProps> = ({ formData, setFormData }) => {
 
       <div className={classes.rowWrapper}>
         <Checkbox
-          type="checkbox"
           label="Keshbek ishlatilsinmi?"
           name="is_cashback_used"
           checked={formData.is_cashback_used}
@@ -59,7 +73,6 @@ const FormBody: React.FC<IProps> = ({ formData, setFormData }) => {
         {['Standart', 'Comfort', 'Biznes'].map(type => (
           <Radio
             key={type}
-            type="radio"
             label={type}
             value={type}
             name="car_type"
@@ -71,22 +84,37 @@ const FormBody: React.FC<IProps> = ({ formData, setFormData }) => {
       </Input.Wrapper>
 
       <Input.Wrapper label="Jo‘nash sanasi:" className={classes.columnWrapper}>
-        <input
-          type="date"
-          name="date_of_departure"
-          onChange={handleChange}
-          value={formData.date_of_departure}
+        <DatePickerInput
+          value={selectedDate ? dayjs(selectedDate).format('YYYY-MM-DD') : undefined}
+          onChange={(value: string) => {
+            if (value) {
+              setSelectedDate(dayjs(value, 'YYYY-MM-DD').toDate());
+            } else {
+              setSelectedDate(null);
+            }
+          }}
           className={classes.formDatePicker}
+          placeholder="Sanani tanlang"
+          clearable
         />
       </Input.Wrapper>
 
       <Input.Wrapper label="Jo‘nash vaqti:" className={classes.columnWrapper}>
         <TimeInput
-          type="time"
-          name="date_of_departure"
-          onChange={handleChange}
+          value={selectedTime ? dayjs(selectedTime).format('HH:mm') : undefined}
+          onChange={event => {
+            const value = event.target.value;
+            if (value) {
+              const [hours, minutes] = value.split(':').map(Number);
+              const newDate = new Date(selectedTime || new Date());
+              newDate.setHours(hours, minutes, 0, 0);
+              setSelectedTime(newDate);
+            } else {
+              setSelectedTime(null);
+            }
+          }}
           className={classes.formInput}
-          value={formData.date_of_departure}
+          placeholder="Soatni tanlang"
         />
       </Input.Wrapper>
 
@@ -94,7 +122,6 @@ const FormBody: React.FC<IProps> = ({ formData, setFormData }) => {
         {['Cash', 'Card'].map(type => (
           <Radio
             key={type}
-            type="radio"
             value={type}
             name="payment_type"
             onChange={handleChange}

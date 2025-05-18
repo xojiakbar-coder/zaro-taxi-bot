@@ -1,9 +1,11 @@
 import type { OrderFormData } from '@/modules/routes/types';
 import dayjs from 'dayjs';
 const telegramUserId = localStorage.getItem('telegramUserId');
+const routeId = localStorage.getItem('routeId');
 
 export const defaultFormData: OrderFormData = {
   telegram_id: String(telegramUserId),
+  route: routeId ? Number(routeId) : 0,
   is_delivery: false,
   ride_price: '0',
   cashback_used_percent: 0,

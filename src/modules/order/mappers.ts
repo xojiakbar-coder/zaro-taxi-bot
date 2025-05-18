@@ -3,6 +3,7 @@ import * as Types from './types';
 
 export const Order = (item?: any): Types.IEntity.Order => ({
   telegram_id: get(item, 'telegram_id', ''),
+  route: get(item, 'is_delivery', 0),
   is_delivery: get(item, 'is_delivery', false),
   ride_price: get(item, 'ride_price', '0'),
   cashback_used_percent: get(item, 'cashback_used_percent', 0),

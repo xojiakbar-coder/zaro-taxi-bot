@@ -6,9 +6,10 @@ import Driver from '../pages/Driver/Driver';
 import Clients from '../pages/Admin/Clients';
 import Drivers from '../pages/Admin/Drivers';
 import { Route, Routes } from 'react-router-dom';
-import Cashback from '../pages/Cashback/Cashback';
-import Direction from '../pages/Direction/Direction';
+// import Cashback from '../pages/Cashback/Cashback';
+// import Direction from '../pages/Direction/Direction';
 import GenericElement from '../view';
+import MyOrders from '@/pages/MyOrders/List';
 
 function Router() {
   return (
@@ -17,11 +18,10 @@ function Router() {
         <Route path="/" element={<Home />} />
         <Route path="/order/:id" element={<Order />} />
         <Route path="/driver" element={<Driver />} />
-        <Route path="/cashback" element={<Cashback />} />
-        <Route path="/direction" element={<Direction />} />
+        {/* <Route path="/cashback" element={<Cashback />} /> */}
+        {/* <Route path="/direction" element={<Direction />} /> */}
         <Route path="/profile" element={<GenericElement />} />
-        <Route path="/orders" element={<GenericElement />} />
-        <Route path="/new-order" element={<GenericElement />} />
+        <Route path="/my-orders" element={<MyOrders />} />
       </Route>
 
       <Route path="/admin" element={<Admin />}>

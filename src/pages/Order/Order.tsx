@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Notification } from '@mantine/core';
 import { Button } from '../../components/Button';
 import { BASE_URL } from './../../common/config/api';
 
@@ -9,6 +8,7 @@ import { LuCheck, LuX } from 'react-icons/lu';
 
 import * as Types from '@/modules/order/types';
 import { defaultFormData } from './../../modules/order/forms/index';
+import Notification from '@/components/Notification';
 
 const OrderPage = () => {
   const [formData, setFormData] = useState<Types.IEntity.Order>(defaultFormData);
@@ -61,7 +61,7 @@ const OrderPage = () => {
           />
         )}
         {success && (
-          <Notification variant="success" className={classes.alert} icon={<LuCheck />} color="teal" title="Ajoyib">
+          <Notification color="teal" title="Ajoyib" variant="success" icon={<LuCheck />} className={classes.alert}>
             Buyurtma muvaffaqiyatli yuborildi!
           </Notification>
         )}
