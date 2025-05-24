@@ -57,6 +57,15 @@ export declare namespace IEntity {
     allows_write_to_pm?: boolean;
     photo_url?: string;
   }
+
+  export interface Driver {
+    id: number;
+    car_number: string;
+    car_model_name: string;
+    is_active: boolean;
+    current_tariff: string;
+    recent_rides: string[];
+  }
 }
 
 export declare namespace IQuery {
@@ -86,6 +95,4 @@ export declare namespace IForm {
     date_of_departure: string;
     payment_type: 'Cash' | 'Card';
   }
-
-  export interface Update {}
 }

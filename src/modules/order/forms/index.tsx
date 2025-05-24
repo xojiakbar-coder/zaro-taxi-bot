@@ -1,10 +1,14 @@
-import type { OrderFormData } from '@/modules/routes/types';
 import dayjs from 'dayjs';
-const telegramUserId = localStorage.getItem('telegramUserId');
+import * as Types from '../../order/types';
+import type { OrderFormData } from '@/modules/routes/types';
+
+const userStr = localStorage.getItem('telegramUser');
+const user: Types.IEntity.User | null = userStr ? JSON.parse(userStr) : null;
+
 const routeId = localStorage.getItem('routeId');
 
 export const defaultFormData: OrderFormData = {
-  telegram_id: String(telegramUserId),
+  telegram_id: String(user && user?.id),
   route: routeId ? Number(routeId) : 0,
   is_delivery: false,
   ride_price: '0',

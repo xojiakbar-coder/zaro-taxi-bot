@@ -18,6 +18,7 @@ function Router() {
         <Route path="/" element={<Home />} />
         <Route path="/order/:id" element={<Order />} />
         <Route path="/driver" element={<Driver />} />
+        <Route path="/driver-orders" element={<Driver />} />
         {/* <Route path="/cashback" element={<Cashback />} /> */}
         {/* <Route path="/direction" element={<Direction />} /> */}
         <Route path="/profile" element={<GenericElement />} />

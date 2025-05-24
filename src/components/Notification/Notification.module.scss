@@ -1,0 +1,71 @@
+.message {
+  position: absolute;
+  left: 40%;
+  right: 40%;
+  animation: show-message 200ms cubic-bezier(0.47, 0, 0.745, 0.715);
+  z-index: 9999;
+}
+
+@keyframes show-message {
+  0% {
+    top: -100px;
+    opacity: 0;
+    display: none;
+  }
+
+  100% {
+    top: 35px;
+    display: flex;
+    opacity: 1;
+  }
+}
+
+.mantine-Notification-root {
+  text-align: center;
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  max-width: 300px;
+  margin: 0 auto;
+
+  &.mantine-Notification-root-success {
+    background-color: #d3f9d8;
+    color: #2b8a3e;
+    border: 1px solid #a3e3b1;
+  }
+
+  &.mantine-Notification-root-error {
+    background-color: #ffe3e3;
+    color: #c92a2a;
+    border: 1px solid #f5c2c2;
+  }
+
+  &.mantine-Notification-root-warning {
+    background-color: #fff3bf;
+    color: #b08900;
+    border: 1px solid #ffe066;
+  }
+
+  &.mantine-Notification-root-info {
+    background-color: #e7f5ff;
+    color: #1c7ed6;
+    border: 1px solid #a5d8ff;
+  }
+
+  .mantine-Notification-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .mantine-Notification-body {
+    font-size: 13px;
+  }
+
+  .mantine-Notification-closeButton {
+    color: inherit;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}

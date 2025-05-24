@@ -1,13 +1,14 @@
+import { useEffect } from 'react';
 import Card from '../../components/Card/RoutesCard';
 import { useNavigate } from 'react-router-dom';
 import { useList } from '../../modules/routes/index';
 import SpinnerLoader from '../../components/Loader/Spinner';
-import { useTelegramUser } from './../../modules/order/hooks/getUser';
-import { useEffect } from 'react';
+import { useTelegramUser } from '@/modules/order/hooks/getUser';
 
 const Home = () => {
   const navigate = useNavigate();
   const user = useTelegramUser();
+
   const { data, loading } = useList();
 
   useEffect(() => {}, [user]);

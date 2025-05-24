@@ -2,15 +2,20 @@ import * as Types from '../types';
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-export const useTelegramUser = (): { id: string } | null => {
+export const useTelegramUser = (): Types.IEntity.User | null => {
   const { hash } = useLocation();
-  const [user, setUser] = useState<{ id: string } | null>(null);
+  const [user, setUser] = useState<Types.IEntity.User | null>(null);
 
   useEffect(() => {
     if (!hash.startsWith('#tgWebAppData=')) {
-      const storedId = localStorage.getItem('telegramUserId');
-      if (storedId) {
-        setUser({ id: storedId });
+      const stored = localStorage.getItem('telegramUser');
+      if (stored) {
+        try {
+          const parsedUser = JSON.parse(stored) as Types.IEntity.User;
+          setUser(parsedUser);
+        } catch (e) {
+          console.error('Error parsing stored user JSON:', e);
+        }
       }
       return;
     }
@@ -23,12 +28,10 @@ export const useTelegramUser = (): { id: string } | null => {
 
       if (userRaw) {
         const userJson = decodeURIComponent(userRaw);
-        const user: Types.IEntity.User = JSON.parse(userJson);
-        const telegramId = `${user.id}`;
+        const parsedUser = JSON.parse(userJson) as Types.IEntity.User;
 
-        setUser({ id: telegramId });
-
-        localStorage.setItem('telegramUserId', telegramId);
+        localStorage.setItem('telegramUser', JSON.stringify(parsedUser));
+        setUser(parsedUser);
       }
     } catch (error) {
       console.error('Failed to parse Telegram user data:', error);
