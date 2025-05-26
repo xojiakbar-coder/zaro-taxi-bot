@@ -1,46 +1,47 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { BASE_URL } from '@/common/config/api';
-import * as Types from '@/modules/driver/types';
+import * as Types from '@/modules/order/types';
 
-export const useDriver = () => {
-  const [data, setData] = useState<Types.IEntity.Driver | null>(null);
+export const useCreatePassengerOrder = (defaultFormData: Types.IEntity.Order) => {
+  const [formData, setFormData] = useState<Types.IEntity.Order>(defaultFormData);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchData = useCallback(async (telegram_id: string) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setLoading(true);
     setError(null);
     setSuccess(false);
+
     try {
-      const response = await fetch(`${BASE_URL}/driver/me/`, {
+      const response = await fetch(`${BASE_URL}/passenger/bookings/create/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ telegram_id })
+        body: JSON.stringify(formData)
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(`Buyurtma olishda xatolik yuz berdi: ${JSON.stringify(errorData)}`);
+        throw new Error(`Buyurtma yuborishda xatolik yuz berdi: ${JSON.stringify(errorData)}`);
       }
 
-      const result: Types.IEntity.Driver = await response.json();
-      setData(result);
       setSuccess(true);
     } catch (err: any) {
       setError(err.message || 'Xatolik yuz berdi.');
     } finally {
       setLoading(false);
     }
-  }, []);
+  };
 
   return {
-    data,
+    formData,
+    setFormData,
+    loading,
     error,
     success,
-    loading,
-    fetchData
+    handleSubmit
   };
 };

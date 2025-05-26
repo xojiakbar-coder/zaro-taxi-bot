@@ -58,13 +58,53 @@ export declare namespace IEntity {
     photo_url?: string;
   }
 
+  export interface SelectedTariff {
+    id: number;
+    created_at: string;
+    updated_at: string;
+    name: string;
+    price: string;
+    duration_days: number;
+    ride_limit: number;
+    comission: number;
+  }
+
+  export interface CurrentTariff {
+    selected_tariff: SelectedTariff;
+    is_paid: boolean;
+    paid_at: string;
+    tariff_end: string;
+  }
+
+  export interface RecentRide {
+    id: number;
+    commission_payment_screenshot: string | null;
+    created_at: string;
+    updated_at: string;
+    is_completed: boolean;
+    driver: number;
+    route: number;
+    bookings: unknown[];
+  }
+
   export interface Driver {
     id: number;
     car_number: string;
     car_model_name: string;
     is_active: boolean;
-    current_tariff: string;
-    recent_rides: string[];
+    current_tariff: CurrentTariff;
+    recent_rides: RecentRide[];
+  }
+
+  export interface Tariff {
+    id: number;
+    name: string;
+    price: string;
+    comission: number;
+    updated_at: string;
+    created_at: string;
+    ride_limit: number;
+    duration_days: number;
   }
 }
 

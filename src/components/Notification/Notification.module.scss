@@ -1,71 +1,83 @@
+.container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999999 !important;
+}
+
 .message {
   position: absolute;
-  left: 40%;
-  right: 40%;
-  animation: show-message 200ms cubic-bezier(0.47, 0, 0.745, 0.715);
-  z-index: 9999;
+  z-index: 999 !important;
+  animation: show-message 350ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  pointer-events: all;
+}
+
+// Position variants
+.top-right {
+  top: 35px;
+  right: 24px;
+}
+
+.top-left {
+  top: 35px;
+  left: 24px;
+}
+
+.bottom-right {
+  bottom: 100px;
+  right: 24px;
+}
+
+.bottom-left {
+  bottom: 120px;
+  left: 24px;
+}
+
+:global(.mantine-Notification-root) {
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+:global(.mantine-Notification-body) {
+  display: flex;
+  align-items: center;
+}
+
+:global(.mantine-Notification-title) {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+:global(.mantine-Notification-description) {
+  font-size: 14px;
+  color: #555;
+}
+
+:global(.mantine-Notification-closeButton) {
+  color: #888;
+  transition: color 0.2s ease;
+}
+
+:global(.mantine-Notification-closeButton:hover) {
+  color: #000;
+}
+
+@media (max-width: 992px) {
+  .message {
+    max-width: calc(100% - 48px);
+  }
 }
 
 @keyframes show-message {
   0% {
-    top: -100px;
+    transform: translateY(-20px);
     opacity: 0;
-    display: none;
   }
 
   100% {
-    top: 35px;
-    display: flex;
+    transform: translateY(0);
     opacity: 1;
-  }
-}
-
-.mantine-Notification-root {
-  text-align: center;
-  padding: 12px 16px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  font-size: 14px;
-  max-width: 300px;
-  margin: 0 auto;
-
-  &.mantine-Notification-root-success {
-    background-color: #d3f9d8;
-    color: #2b8a3e;
-    border: 1px solid #a3e3b1;
-  }
-
-  &.mantine-Notification-root-error {
-    background-color: #ffe3e3;
-    color: #c92a2a;
-    border: 1px solid #f5c2c2;
-  }
-
-  &.mantine-Notification-root-warning {
-    background-color: #fff3bf;
-    color: #b08900;
-    border: 1px solid #ffe066;
-  }
-
-  &.mantine-Notification-root-info {
-    background-color: #e7f5ff;
-    color: #1c7ed6;
-    border: 1px solid #a5d8ff;
-  }
-
-  .mantine-Notification-title {
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
-
-  .mantine-Notification-body {
-    font-size: 13px;
-  }
-
-  .mantine-Notification-closeButton {
-    color: inherit;
-    &:hover {
-      opacity: 0.8;
-    }
   }
 }

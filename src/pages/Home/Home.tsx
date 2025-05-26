@@ -1,31 +1,29 @@
 import { useEffect } from 'react';
-import Card from '../../components/Card/RoutesCard';
+import classes from './Home.module.scss';
 import { useNavigate } from 'react-router-dom';
-import { useList } from '../../modules/routes/index';
+import { useList } from '../../modules/routes/';
+import Card from '../../components/Card/RoutesCard';
 import SpinnerLoader from '../../components/Loader/Spinner';
 import { useTelegramUser } from '@/modules/order/hooks/getUser';
 
 const Home = () => {
   const navigate = useNavigate();
   const user = useTelegramUser();
-
   const { data, loading } = useList();
 
   useEffect(() => {}, [user]);
 
   const handleCardClick = (id: number) => {
-    navigate(`/order/${id}`);
-    if (id) {
-      localStorage.setItem('routeId', `${id}`);
-    }
+    navigate(`/orders/${id}`);
+    if (id) localStorage.setItem('routeId', id.toString());
   };
 
   if (loading) return <SpinnerLoader />;
 
   return (
-    <div className="min-h-max h-max-height overflow-y-auto px-4 py-[38px]">
-      <div className="md:text-3xl text-2xl font-bold text-center text-white mb-[36px]">Yo'nalishlar tanlang</div>
-      <div className="flex flex-col gap-6 w-full lg:px-56 md:px-10 px-4">
+    <div className={classes.container}>
+      <div className={classes.title}>Yo'nalishlar tanlang</div>
+      <div className={classes.cardWrapper}>
         {data?.map(item => (
           <Card
             id={item.id}

@@ -13,6 +13,7 @@ export interface RoutesCardProps {
   id: number;
   start: string;
   finish: string;
+  selected?: boolean;
   className?: string;
   onClick?: () => void;
 }

@@ -1,32 +1,31 @@
 import { useCallback, useState } from 'react';
 import { BASE_URL } from '@/common/config/api';
-import * as Types from '@/modules/driver/types';
 
-export const useDriver = () => {
-  const [data, setData] = useState<Types.IEntity.Driver | null>(null);
+export const useRide = () => {
+  const [data, setData] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchData = useCallback(async (telegram_id: string) => {
+  const fetchData = useCallback(async (driver: string, route: number) => {
     setLoading(true);
     setError(null);
     setSuccess(false);
     try {
-      const response = await fetch(`${BASE_URL}/driver/me/`, {
+      const response = await fetch(`${BASE_URL}/driver/create-ride/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ telegram_id })
+        body: JSON.stringify({ driver, route })
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(`Buyurtma olishda xatolik yuz berdi: ${JSON.stringify(errorData)}`);
+        throw new Error(`Buyurtma navbatga qo‘shilishda xatolik yuz berdi: ${JSON.stringify(errorData)}`);
       }
 
-      const result: Types.IEntity.Driver = await response.json();
+      const result: string = await response.json();
       setData(result);
       setSuccess(true);
     } catch (err: any) {

@@ -16,7 +16,7 @@ interface Location {
   name: string;
 }
 
-interface Route {
+export interface Route {
   id: number;
   start: Location;
   finish: Location;
