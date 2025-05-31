@@ -1,4 +1,3 @@
-// import { useEffect } from 'react';
 import styles from './MyOrders.module.scss';
 // import * as Types from '@/modules/order/types';
 
@@ -18,8 +17,7 @@ const MyOrders = () => {
   const activeOrder = data?.recent_rides[0];
 
   useEffect(() => {
-    fetchData('5317540907');
-    console.log(data, user?.id);
+    if (user) fetchData(user.id);
   }, [user, fetchData]);
 
   if (data === null) {
