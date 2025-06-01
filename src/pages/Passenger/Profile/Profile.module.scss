@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  height: 100%;
+  padding: 20px 0 0 0;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  padding: 20px 14px;
+  border-radius: 6px;
+  height: max-content;
+  background: #4e54c8;
+  background: linear-gradient(160deg, #873f1f, #363153);
+  background: -webkit-linear-gradient(to right, #8f94fb, #4e54c8);
+}

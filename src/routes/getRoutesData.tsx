@@ -1,8 +1,8 @@
 import Home from '@/pages/Home/Home';
 import Layout from '@/layouts/Main/Layout';
 import Driver from '@/pages/Driver/Driver/Driver';
-import GenericElement from '../view/GenericElement';
 import OrderPage from '@/pages/Passenger/Order/Order';
+import Profile from '@/pages/Passenger/Profile/Profile';
 import Form from '@/pages/Driver/Driver/components/Form';
 import MyOrders from './../pages/Driver/MyOrders/MyOrders';
 import { Navigate, type RouteObject } from 'react-router-dom';
@@ -15,7 +15,7 @@ const getRoutesData: RouteObject[] = [
     children: [
       { path: '/', element: <Home /> },
       { path: '/orders/:id', element: <OrderPage /> },
-      { path: '/profile', element: <GenericElement /> },
+      { path: '/profile', element: <Profile /> },
       { path: '/my-orders', element: <PassengerMyOrders /> },
       { path: '*', element: <Navigate to="/" /> }
     ]
