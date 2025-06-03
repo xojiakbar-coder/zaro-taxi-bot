@@ -11,6 +11,7 @@ export const useRide = () => {
     setLoading(true);
     setError(null);
     setSuccess(false);
+
     try {
       const response = await fetch(`${BASE_URL}/driver/create-ride/`, {
         method: 'POST',
@@ -21,15 +22,20 @@ export const useRide = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(`Buyurtma navbatga qo‘shilishda xatolik yuz berdi: ${JSON.stringify(errorData)}`);
+        if (response.status === 400) {
+          setError('no_tariff');
+        } else {
+          const errorData = await response.json();
+          throw new Error(errorData || 'Xatolik yuz berdi.');
+        }
+        return;
       }
 
       const result: string = await response.json();
       setData(result);
       setSuccess(true);
     } catch (err: any) {
-      setError(err.message || 'Xatolik yuz berdi.');
+      setError(err || 'Xatolik yuz berdi.');
     } finally {
       setLoading(false);
     }

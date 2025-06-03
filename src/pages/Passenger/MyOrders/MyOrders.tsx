@@ -7,6 +7,7 @@ import { Button } from '@/components/Button';
 import EmptyPage from '@/components/EmptyPage';
 import Notification from '@/components/Notification/Notification';
 
+import { Title } from '@mantine/core';
 import useList from '@/modules/myorders/hooks/useList';
 import useDeleteOrder from '@/modules/myorders/hooks/useDelete';
 
@@ -38,56 +39,55 @@ const MyOrders = () => {
   }
 
   return (
-    <div className={styles.myOrdersWrapper}>
-      {success &&
-        data.length > 0 &&
-        data.map(item => (
-          <div key={item.id} className={styles.orderCard}>
-            <div className={styles.orderItem}>
-              <span>Buyurtma ID:</span> {item.id}
-            </div>
-            <div className={styles.orderItem}>
-              <span>Yaratilgan:</span> {item.created_at}
-            </div>
-            <div className={styles.orderItem}>
-              <span>Jo‘nash sanasi:</span> {item.date_of_departure}
-            </div>
-            <div className={styles.orderItem}>
-              <span>Avto turi:</span> {item.car_type}
-            </div>
-            <div className={styles.orderItem}>
-              <span>Old o‘rindiq:</span> {item.front_seat ? 'Ha' : 'Yo‘q'}
-            </div>
-            <div className={styles.orderItem}>
-              <span>To‘lov turi:</span> {item.payment_type}
-            </div>
-            <div className={styles.orderItem}>
-              <span>Jo‘nash manzili:</span> {item?.route?.start?.name ?? ''}
-            </div>
-            <div className={styles.orderItem}>
-              <span>Borish manzili:</span> {item?.route?.finish?.name ?? ''}
-            </div>
+    <div className={styles.container}>
+      <Title order={2} className={styles.title}>
+        Buyurtmalaringiz ro'yxati
+      </Title>
+      <div className={styles.myOrdersWrapper}>
+        {success &&
+          data.length > 0 &&
+          data.map(item => (
+            <div key={item.id} className={styles.orderCard}>
+              <div className={styles.orderItem}>
+                <span>Buyurtma ID:</span> {item.id}
+              </div>
+              <div className={styles.orderItem}>
+                <span>Yaratilgan:</span> {item.created_at}
+              </div>
+              <div className={styles.orderItem}>
+                <span>Jo‘nash sanasi:</span> {item.date_of_departure}
+              </div>
+              <div className={styles.orderItem}>
+                <span>Avto turi:</span> {item.car_type}
+              </div>
+              <div className={styles.orderItem}>
+                <span>Old o‘rindiq:</span> {item.front_seat ? 'Ha' : 'Yo‘q'}
+              </div>
+              <div className={styles.orderItem}>
+                <span>To‘lov turi:</span> {item.payment_type}
+              </div>
+              <div className={styles.orderItem}>
+                <span>Jo‘nash manzili:</span> {item?.route?.start?.name ?? ''}
+              </div>
+              <div className={styles.orderItem}>
+                <span>Borish manzili:</span> {item?.route?.finish?.name ?? ''}
+              </div>
 
-            <Button color="red" size="xs" className="mt-[14px]" onClick={() => handleDelete(item?.id)}>
-              O‘chirish
-            </Button>
-          </div>
-        ))}
+              <Button color="red" size="sm" className="mt-[14px]" onClick={() => handleDelete(item?.id)}>
+                O‘chirish
+              </Button>
+            </div>
+          ))}
 
-      {deleteSuccess && (
-        <Notification slowHidden withCloseButton={false} message color="green" mt="lg">
-          Buyurtma muvaffaqiyatli o‘chirildi.
-        </Notification>
-      )}
-      {error && !!data.length && (
-        <Notification
-          message
-          color="red"
-          variant="error"
-          withCloseButton
-          title="Xatolik yuz berdi qayt urinib ko‘ring"
-        />
-      )}
+        {deleteSuccess && (
+          <Notification withCloseButton={false} message color="green" mt="lg">
+            Buyurtma muvaffaqiyatli o‘chirildi.
+          </Notification>
+        )}
+        {error && !!data.length && (
+          <Notification color="red" variant="error" withCloseButton title="Xatolik yuz berdi qayt urinib ko‘ring" />
+        )}
+      </div>
     </div>
   );
 };

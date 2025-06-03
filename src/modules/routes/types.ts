@@ -7,10 +7,11 @@ export type OrderFormData = {
   ride_price: string | null;
   is_cashback_used: boolean;
   cashback_used_percent: number | null;
-  payment_type: 'Cash' | 'Card';
-  date_of_departure: string;
-  car_type: 'Standart' | 'Comfort' | 'Biznes';
+  payment_type: 'Cash' | 'Card' | null;
+  date_of_departure: string | null;
+  car_type: 'Standart' | 'Comfort' | 'Biznes' | null;
 };
+
 interface Location {
   id: number;
   name: string;
@@ -25,4 +26,6 @@ export interface Route {
 export interface UseRouteList {
   data: Route[];
   loading: boolean;
+  success: boolean;
+  error: string | null;
 }

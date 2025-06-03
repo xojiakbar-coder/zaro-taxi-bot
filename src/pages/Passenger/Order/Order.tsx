@@ -3,7 +3,7 @@ import classes from './Order.module.scss';
 import { LuCheck, LuX } from 'react-icons/lu';
 
 import { Button } from '@/components/Button';
-import Notification from '@/components/Notification/Notification';
+import { Notification } from '@mantine/core';
 import { useCreatePassengerOrder } from '@/modules/order/hooks/useOrder';
 import { useDefaultFormData } from '@/modules/order/hooks/useDefaultFormData';
 
@@ -16,7 +16,6 @@ const OrderPage = () => {
       <div className={classes.title}>Buyurtma berish</div>
       <form onSubmit={handleSubmit} className={classes.form}>
         <FormBody formData={formData} setFormData={setFormData} />
-
         {error && (
           <Notification
             color="red"
@@ -26,10 +25,14 @@ const OrderPage = () => {
             title={`Xatolik yuz berdi, qayta urinib ko‘ring`}
           />
         )}
-        {success && (
-          <Notification message color="teal" title="Ajoyib" variant="success" icon={<LuCheck />}>
-            Buyurtma muvaffaqiyatli yuborildi!
-          </Notification>
+        {success && !error && (
+          <Notification
+            color="teal"
+            icon={<LuCheck />}
+            variant="succcess"
+            withCloseButton={false}
+            title="Buyurtma muvaffaqiyatli yuborildi!"
+          />
         )}
 
         <Button type="submit" variant="filled" height={50} disabled={loading} className={classes.submitButton}>

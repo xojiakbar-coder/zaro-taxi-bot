@@ -4,9 +4,11 @@ import { Text } from '@mantine/core';
 import { LuInbox } from 'react-icons/lu';
 import styles from './EmptyPage.module.scss';
 import { useNavigate } from 'react-router-dom';
+import type { IconType } from 'react-icons/lib';
 
 interface IProps {
   title: string;
+  icon?: IconType;
   subtitle?: string;
   externalLink?: string;
   internalLink?: string;
@@ -16,6 +18,7 @@ interface IProps {
 
 const EmptyPage: React.FC<IProps> = ({
   title,
+  icon,
   subtitle,
   externalLink = '',
   internalLink = '',
@@ -23,16 +26,19 @@ const EmptyPage: React.FC<IProps> = ({
   buttonOnClick
 }) => {
   const navigate = useNavigate();
+  const Icon = icon;
 
   return (
     <div className={styles.emptyPage}>
-      <LuInbox className={styles.icon} />
+      {Icon ? <Icon className={styles.icon} /> : <LuInbox className={styles.icon} />}
       <Text size="lg" className={styles.title}>
         {title}
       </Text>
-      <Text size="sm" className={styles.subtitle}>
-        {subtitle}
-      </Text>
+      {subtitle && (
+        <Text size="sm" className={styles.subtitle}>
+          {subtitle}
+        </Text>
+      )}
       {buttonContent && !externalLink && !internalLink && (
         <Button variant="primary" onClick={buttonOnClick} className={styles.button}>
           {buttonContent}

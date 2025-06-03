@@ -76,6 +76,34 @@ export declare namespace IEntity {
     tariff_end: string;
   }
 
+  interface Passenger {
+    id: number;
+    full_name: string;
+    phone_number: string;
+    telegram_id: string;
+    promo_code: string;
+    cashback_percentage: number;
+    cashback_amount: number;
+  }
+
+  interface Bookings {
+    id: number;
+    passenger: Passenger;
+    created_at: string; // ISO date-time string
+    updated_at: string; // ISO date-time string
+    front_seat: boolean;
+    extra_luggage: string;
+    is_delivery: boolean;
+    ride_price: string; // This is a string in the data, but you might convert to number
+    is_cashback_used: boolean;
+    cashback_used_percent: number;
+    payment_type: string;
+    date_of_departure: string; // ISO date-time string
+    car_type: string;
+    payment_screenshot: string | null;
+    route: number;
+  }
+
   export interface RecentRide {
     id: number;
     commission_payment_screenshot: string | null;
@@ -83,8 +111,8 @@ export declare namespace IEntity {
     updated_at: string;
     is_completed: boolean;
     driver: number;
-    route: number;
-    bookings: unknown[];
+    route: Route;
+    bookings: Bookings[];
   }
 
   export interface Driver {

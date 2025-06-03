@@ -1,16 +1,16 @@
 import { Title } from '@mantine/core';
-import EmptyPage from '@/components/EmptyPage';
 
 import styles from './MyOrders.module.scss';
+import { LuClipboard } from 'react-icons/lu';
 
 const CompletedOrders = () => {
   return (
     <div>
-      <Title order={3} className={styles.title}>
+      <Title order={4} className={styles.compledtedOrdersTitle}>
         Buyurtmalar tarixi
       </Title>
-      <div className="flex justify-center items-center h-full pt-6">
-        <EmptyPage title="Hozircha bajarilgan buyurtmalaringiz yo‘q" />
+      <div className={styles.compledtedOrdersContent}>
+        <LuClipboard className="text-[40px]" />
       </div>
     </div>
   );
