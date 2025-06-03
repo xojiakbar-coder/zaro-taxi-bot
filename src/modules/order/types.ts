@@ -18,9 +18,9 @@ export declare namespace IEntity {
     front_seat: boolean;
     extra_luggage: string | null;
     is_cashback_used: boolean;
-    car_type: 'Standart' | 'Comfort' | 'Biznes';
-    date_of_departure: string;
-    payment_type: 'Cash' | 'Card';
+    car_type: 'Standart' | 'Comfort' | 'Biznes' | null;
+    date_of_departure: string | null;
+    payment_type: 'Cash' | 'Card' | null;
   }
 
   interface Route {
