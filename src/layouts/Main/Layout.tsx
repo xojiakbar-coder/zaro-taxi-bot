@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import classes from './Layout.module.scss';
-import { BottomMenu } from './BottomMenu/BottomMenu';
+import { BottomMenu } from '../BottomMenu/BottomMenu';
 
 const Layout = () => {
   return (

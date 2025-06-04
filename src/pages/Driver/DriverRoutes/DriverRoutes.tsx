@@ -32,12 +32,12 @@ const DriverRoutes = () => {
     if (driver?.id && selectedItem !== null) fetchData(driver.id.toString(), routes[selectedItem].id);
   };
 
-  if (loading && !success) {
-    return <SpinnerLoader />;
+  if (activeOrder && success) {
+    return <EmptyPage icon={LuBadgeInfo} title="Siz allaqachon aktiv navbat bor" />;
   }
 
-  if (activeOrder) {
-    return <EmptyPage icon={LuBadgeInfo} title="Siz allaqachon aktiv navbat bor" />;
+  if (loading) {
+    return <SpinnerLoader />;
   }
 
   const successMessage =

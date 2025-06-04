@@ -21,6 +21,7 @@ const OrderPage = () => {
             color="red"
             icon={<LuX />}
             variant="error"
+            withCloseButton={false}
             className={classes.alert}
             title={`Xatolik yuz berdi, qayta urinib ko‘ring`}
           />

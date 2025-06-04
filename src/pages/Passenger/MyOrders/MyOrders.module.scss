@@ -30,12 +30,11 @@
   cursor: pointer;
   padding: 12px 16px;
   border-radius: 8px;
-  border-left: 4px solid #f95e1c;
+  border-left: 4px solid #f9621c;
   transition: background-color 0.2s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   background: #333333;
-  background: linear-gradient(150deg, #df7f12, #333333);
-  background: -webkit-linear-gradient(0deg, #37383f, #4d4238);
+  background: -webkit-linear-gradient(160deg, #2b2825, #2c2a26);
 }
 
 .orderItem {

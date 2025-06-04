@@ -6,10 +6,10 @@ import { IoIosCash, IoIosCard } from 'react-icons/io';
 import { TimeInput, DatePickerInput } from '@mantine/dates';
 import { PaymentCard } from '@/components/Card/PaymentCard';
 
-import standartCarIcon from '../../../../assets/images/standart-car.svg';
-import comfortCarIcon from '../../../../assets/images/comfort-car.svg';
-import bussinessCarIcon from '../../../../assets/images/bussiness-car.svg';
 import { CarTypeCard } from '@/components/Card/CarTypeCard';
+import comfortCarIcon from '../../../../assets/images/comfort-car.svg';
+import standartCarIcon from '../../../../assets/images/standart-car.svg';
+import bussinessCarIcon from '../../../../assets/images/bussiness-car.svg';
 
 interface IProps {
   formData: any;
@@ -80,6 +80,7 @@ const FormBody: React.FC<IProps> = ({ formData, setFormData }) => {
         <Input
           size="md"
           type="text"
+          autoComplete="off"
           name="extra_luggage"
           onChange={handleChange}
           className={classes.formInput}
@@ -89,7 +90,7 @@ const FormBody: React.FC<IProps> = ({ formData, setFormData }) => {
       </Input.Wrapper>
 
       <Input.Wrapper label="Mashina turi:" className={classes.radioGroup}>
-        <div className={classes.rowWrapper}>
+        <div className={classes.carTypeWrapper}>
           {[
             { icon: comfortCarIcon, content: 'Standart', value: 'Standart' },
             { icon: standartCarIcon, content: 'Comfort', value: 'Comfort' },
@@ -97,11 +98,11 @@ const FormBody: React.FC<IProps> = ({ formData, setFormData }) => {
           ].map(item => (
             <CarTypeCard
               key={item.value}
-              icon={item.icon}
+              carSvg={item.icon}
               value={item.value}
               content={item.content}
-              active={formData.payment_type === item.value}
-              onClick={() => setFormData((prev: any) => ({ ...prev, payment_type: item.value }))}
+              active={formData.car_type === item.value}
+              onClick={() => setFormData((prev: any) => ({ ...prev, car_type: item.value }))}
             />
           ))}
         </div>

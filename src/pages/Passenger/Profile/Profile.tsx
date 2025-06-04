@@ -15,8 +15,6 @@ const Profile = () => {
     if (user) fetchData(user.id);
   }, [user, fetchData]);
 
-  console.log(data);
-
   if (loading) return <SpinnerLoader />;
 
   return (

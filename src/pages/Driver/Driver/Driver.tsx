@@ -1,21 +1,22 @@
 import { useEffect } from 'react';
 import classes from './Driver.module.scss';
-import { useNavigate } from 'react-router-dom';
 import { Avatar, Card } from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
 import Button from '@/components/Button/Button';
 
 import { FaRegCalendarCheck } from 'react-icons/fa';
-import { LuCarFront, LuPhone } from 'react-icons/lu';
+import { LuBadgeInfo, LuCarFront, LuPhone } from 'react-icons/lu';
 
 import SpinnerLoader from '@/components/Loader/Spinner';
 import { useDriver } from '@/modules/driver/hooks/useDriver';
 import { useStoredTelegramUser } from '@/modules/order/hooks/getStoredUser';
 import dayjs from 'dayjs';
+import EmptyPage from '@/components/EmptyPage';
 
 const Driver = () => {
   const navigate = useNavigate();
   const user = useStoredTelegramUser();
-  const { data, loading, fetchData } = useDriver();
+  const { data, loading, fetchData, error } = useDriver();
 
   useEffect(() => {
     if (user) fetchData(user?.id);
@@ -23,12 +24,24 @@ const Driver = () => {
 
   if (loading) return <SpinnerLoader />;
 
+  if (error || !data) {
+    return (
+      <EmptyPage
+        icon={LuBadgeInfo}
+        title="Ma'lumotlar topilmadi"
+        buttonContent="Biz bilan bog'lanish"
+        externalLink="https://t.me/murodov_azizmurod"
+        subtitle="Bu holat uchun biz bilan bog'lanishingiz mumkin."
+      />
+    );
+  }
+
   return (
     <div className={classes.wrapper}>
       <div className={classes.inner}>
         <div className={classes.header}>
           <Avatar src={user?.photo_url ?? ''} radius="xl" size="lg" alt="Photo not found" />
-          <h2 className={classes.name}>{user?.first_name || ''}</h2>
+          <h2 className={classes.name}>{user?.first_name}</h2>
         </div>
 
         {data?.current_tariff && (

@@ -4,33 +4,32 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  min-width: 150px;
   gap: 10px;
-  width: 170px;
+  width: 100%;
+  min-width: 50px;
   padding: 12px 8px;
   border-radius: 10px;
   border: 1px solid rgb(19, 223, 148);
-  background: linear-gradient(90deg, rgb(18, 168, 113), rgb(10, 140, 99), rgb(6, 168, 127));
-
-  @media (min-width: 567px) {
-    width: 200px;
-  }
+  background: linear-gradient(90deg, rgb(10, 123, 82), rgb(7, 111, 78), rgb(6, 114, 87));
 
   @media (max-width: 567px) {
     width: 150px;
   }
 }
 
-.icon {
-  font-size: 30px;
+.carSvg {
+  width: 70%;
 }
 
 .content {
+  margin-top: 8px;
   font-size: 14px;
   font-weight: 600;
+  user-select: none;
+  text-align: center;
 }
 
 .active {
-  border: 1px solid rgb(13, 255, 199);
-  background: linear-gradient(90deg, rgb(10, 123, 82), rgb(7, 111, 78), rgb(6, 114, 87));
+  border: 1px solid rgb(57, 248, 255);
+  background: linear-gradient(90deg, rgb(10, 88, 60), rgb(10, 90, 65), rgb(9, 90, 70));
 }

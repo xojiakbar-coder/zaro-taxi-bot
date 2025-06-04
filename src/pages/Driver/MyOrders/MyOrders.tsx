@@ -17,12 +17,16 @@ const transformBookingsToTreeData = (bookings: any[]): TreeNodeData[] => {
     label: booking.passenger.full_name,
     value: `booking-${booking.id}`,
     children: [
-      { label: `To‘lov turi: ${booking.payment_type}`, value: `payment_type-${booking.id}` },
+      {
+        label: `To‘lov turi: ${booking.payment_type === 'Cash' ? 'Naqd' : 'Kart'}`,
+        value: `payment_type-${booking.id}`
+      },
       {
         label: `Jo‘nash vaqti: ${dayjs(booking.date_of_departure).format('YYYY-MM-DD HH:mm')}`,
         value: `date_of_departure-${booking.id}`
       },
-      { label: `Qo‘shimcha yuk: ${booking.extra_luggage || 'Yo‘q'}`, value: `extra_luggage-${booking.id}` }
+      { label: `Qo‘shimcha yuk: ${booking.extra_luggage || 'Yo‘q'}`, value: `extra_luggage-${booking.id}` },
+      { label: `Telefon raqam: ${booking.passenger.phone_number || 'Topilmadi'}`, value: `phone-${booking.id}` }
     ]
   }));
 };

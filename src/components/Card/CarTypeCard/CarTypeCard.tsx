@@ -4,17 +4,19 @@ import { Image, Text } from '@mantine/core';
 import styles from './CarTypeCard.module.scss';
 
 interface IProps {
-  icon: string;
+  carSvg: string;
   content: string;
   active: boolean;
   onClick: () => void;
   value: string | number;
 }
 
-const PaymentCard: React.FC<IProps> = ({ active = false, icon, value, content, onClick }) => {
+const PaymentCard: React.FC<IProps> = ({ active = false, carSvg, value, content, onClick }) => {
   return (
-    <div className={`${styles.container} ${active ? styles.active : ''}`} onClick={onClick} title={value.toString()}>
-      <Image src={icon && icon} className={styles.icon} />
+    <div onClick={onClick} title={value.toString()}>
+      <div className={`${styles.container} ${active ? styles.active : ''}`}>
+        <Image src={carSvg && carSvg} className={styles.carSvg} />
+      </div>
       <Text className={styles.content}>{content}</Text>
     </div>
   );
