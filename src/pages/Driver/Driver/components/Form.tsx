@@ -34,7 +34,7 @@ const Form: React.FC = () => {
   });
 
   useEffect(() => {
-    if (user) fetchDriver(user.id);
+    if (user) fetchDriver();
   }, [user, fetchDriver]);
 
   useEffect(() => {

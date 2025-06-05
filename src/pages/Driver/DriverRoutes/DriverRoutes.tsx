@@ -25,7 +25,7 @@ const DriverRoutes = () => {
       setSelectItem(null);
       setRideError(error);
     }
-    if (user) fetchingDriver(user?.id);
+    if (user) fetchingDriver();
   }, [user, fetchingDriver, error]);
 
   const onSubmit = () => {

@@ -86,7 +86,7 @@ export declare namespace IEntity {
     cashback_amount: number;
   }
 
-  interface Bookings {
+  export interface Bookings {
     id: number;
     passenger: Passenger;
     created_at: string; // ISO date-time string

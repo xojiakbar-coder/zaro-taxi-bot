@@ -1,3 +1,4 @@
+import * as Types from '@/modules/driver/types';
 export declare namespace IApi {
   export namespace Single {
     export interface Response {
@@ -35,6 +36,29 @@ export declare namespace IEntity {
     };
   }
 
+  export interface IDriver {
+    id: number;
+    full_name: string;
+    phone_number: string;
+    telegram_id: string;
+    car_number: string;
+    car_model: string;
+    car_type: string;
+    is_paid_comission: boolean;
+    is_active: boolean;
+  }
+
+  export interface IRide {
+    id: number;
+    is_completed: boolean;
+    created_at: string;
+    updated_at: string;
+    driver: IDriver;
+    route: Route;
+    bookings: Types.IEntity.Bookings[];
+    commission_payment_screenshot: string | null;
+  }
+
   interface MyOrders {
     id: string;
     route: Route;
@@ -42,8 +66,9 @@ export declare namespace IEntity {
     updated_at: boolean;
     ride_price: string | null;
     front_seat: boolean;
-    extra_luggage: string | null;
     date_of_departure: string;
+    related_ride: IRide | null;
+    extra_luggage: string | null;
     car_type: 'Standart' | 'Comfort' | 'Biznes';
     payment_type: 'Cash' | 'Card';
   }

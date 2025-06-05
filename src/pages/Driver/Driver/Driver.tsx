@@ -7,24 +7,28 @@ import Button from '@/components/Button/Button';
 import { FaRegCalendarCheck } from 'react-icons/fa';
 import { LuBadgeInfo, LuCarFront, LuPhone } from 'react-icons/lu';
 
+import dayjs from 'dayjs';
+import EmptyPage from '@/components/EmptyPage';
 import SpinnerLoader from '@/components/Loader/Spinner';
 import { useDriver } from '@/modules/driver/hooks/useDriver';
 import { useStoredTelegramUser } from '@/modules/order/hooks/getStoredUser';
-import dayjs from 'dayjs';
-import EmptyPage from '@/components/EmptyPage';
 
 const Driver = () => {
   const navigate = useNavigate();
   const user = useStoredTelegramUser();
-  const { data, loading, fetchData, error } = useDriver();
+  const { data, loading, fetchData } = useDriver();
+
+  useEffect(() => {}, [user, fetchData]);
 
   useEffect(() => {
-    if (user) fetchData(user?.id);
-  }, [user, fetchData]);
+    if (data) {
+      alert(`Xush kelibsiz, ${data?.id}! ${user?.id}`);
+    }
+  }, [data]);
 
   if (loading) return <SpinnerLoader />;
 
-  if (error || !data) {
+  if (!data) {
     return (
       <EmptyPage
         icon={LuBadgeInfo}

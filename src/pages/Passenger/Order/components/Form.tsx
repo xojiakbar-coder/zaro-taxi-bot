@@ -47,8 +47,8 @@ const FormBody: React.FC<IProps> = ({ formData, setFormData }) => {
     <>
       <div className={classes.rowWrapper}>
         <Chip
-          color="teal"
           name="front_seat"
+          color="rgb(13, 49, 255)"
           checked={formData.front_seat}
           className={classes.formCheckbox}
           onChange={(checked: boolean) =>
@@ -61,8 +61,8 @@ const FormBody: React.FC<IProps> = ({ formData, setFormData }) => {
           Oldingi o‘rindiqni band qilish
         </Chip>
         <Chip
-          color="teal"
           name="is_cashback_used"
+          color="rgb(13, 49, 255)"
           className={classes.formCheckbox}
           checked={formData.is_cashback_used}
           onChange={(checked: boolean) =>

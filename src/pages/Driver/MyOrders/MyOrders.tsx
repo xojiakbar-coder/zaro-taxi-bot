@@ -39,7 +39,7 @@ const MyOrders = () => {
   const bookings = transformBookingsToTreeData(activeOrder?.bookings);
 
   useEffect(() => {
-    if (user) fetchData(user.id);
+    if (user) fetchData();
   }, [user, fetchData]);
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const MyOrders = () => {
 
   const handleDelete = async (ride_id: number) => {
     await deleteOrder(user?.id ?? '', ride_id);
-    fetchData(user?.id ?? '');
+    fetchData();
   };
 
   if (!activeOrder && !loading) {
