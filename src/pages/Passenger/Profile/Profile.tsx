@@ -2,10 +2,13 @@ import { useEffect } from 'react';
 import { usePassenger } from '@/modules/passenger/hooks/usePassenger';
 import { useStoredTelegramUser } from '@/modules/order/hooks/getStoredUser';
 
+import { LuBadgeInfo } from 'react-icons/lu';
+
 import styles from './Profile.module.scss';
 import { Avatar, Text } from '@mantine/core';
-import SpinnerLoader from '@/components/Loader/Spinner';
 import { Button } from '@/components/Button';
+import EmptyPage from '@/components/EmptyPage';
+import SpinnerLoader from '@/components/Loader/Spinner';
 
 const Profile = () => {
   const user = useStoredTelegramUser();
@@ -16,6 +19,18 @@ const Profile = () => {
   }, [user, fetchData]);
 
   if (loading) return <SpinnerLoader />;
+
+  if (!data) {
+    return (
+      <EmptyPage
+        icon={LuBadgeInfo}
+        title="Ma'lumotlar topilmadi"
+        buttonContent="Biz bilan bog'lanish"
+        externalLink="https://t.me/murodov_azizmurod"
+        subtitle="Bu holat uchun biz bilan bog'lanishingiz mumkin."
+      />
+    );
+  }
 
   return (
     <div className={styles.container}>

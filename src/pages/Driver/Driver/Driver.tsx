@@ -11,28 +11,22 @@ import dayjs from 'dayjs';
 import EmptyPage from '@/components/EmptyPage';
 import SpinnerLoader from '@/components/Loader/Spinner';
 import { useDriver } from '@/modules/driver/hooks/useDriver';
-import { useStoredTelegramUser } from '@/modules/order/hooks/getStoredUser';
+import { useTelegramUser } from '@/modules/order/hooks/getUser';
 
 const Driver = () => {
+  const user = useTelegramUser();
   const navigate = useNavigate();
-  const user = useStoredTelegramUser();
   const { data, loading, fetchData } = useDriver();
 
   useEffect(() => {}, [user, fetchData]);
 
-  useEffect(() => {
-    if (data) {
-      alert(`Xush kelibsiz, ${data?.id}! ${user?.id}`);
-    }
-  }, [data]);
-
   if (loading) return <SpinnerLoader />;
 
-  if (!data) {
+  if (!loading && !data) {
     return (
       <EmptyPage
         icon={LuBadgeInfo}
-        title="Ma'lumotlar topilmadi"
+        title={`Ma'lumotlar topilmadi`}
         buttonContent="Biz bilan bog'lanish"
         externalLink="https://t.me/murodov_azizmurod"
         subtitle="Bu holat uchun biz bilan bog'lanishingiz mumkin."

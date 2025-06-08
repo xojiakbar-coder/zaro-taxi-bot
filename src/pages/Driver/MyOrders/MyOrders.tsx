@@ -10,7 +10,7 @@ import { useDriver } from '@/modules/driver/hooks/useDriver';
 import useDeleteRide from '@/modules/driver/hooks/useDelete';
 import Notification from '@/components/Notification/Notification';
 import { useStoredTelegramUser } from '@/modules/order/hooks/getStoredUser';
-import { Button, Group, Text, Title, Tree, type TreeNodeData } from '@mantine/core';
+import { Button, Flex, Group, Text, Title, Tree, type TreeNodeData } from '@mantine/core';
 
 const transformBookingsToTreeData = (bookings: any[]): TreeNodeData[] => {
   return bookings?.map(booking => ({
@@ -116,15 +116,28 @@ const MyOrders = () => {
               />
             </div>
           )}
-          <Button
-            color="red"
-            size="sm"
-            className="mt-[14px]"
-            disabled={activeOrder?.bookings[0]}
-            onClick={() => handleDelete(activeOrder?.id)}
-          >
-            O‘chirish
-          </Button>
+          <Flex direction={'column'}>
+            <Button
+              size="sm"
+              color="red"
+              w={'max-content'}
+              className="mt-[14px]"
+              disabled={activeOrder?.bookings[0]}
+              onClick={() => handleDelete(activeOrder?.id)}
+            >
+              O‘chirish
+            </Button>
+            <Button
+              size="sm"
+              color="yellow"
+              w={'max-content'}
+              className="mt-[14px]"
+              disabled={!activeOrder?.is_completed}
+              onClick={() => handleDelete(activeOrder?.id)}
+            >
+              Safar yakunlanlash
+            </Button>
+          </Flex>
         </div>
       )}
       {deleteSuccess && (
