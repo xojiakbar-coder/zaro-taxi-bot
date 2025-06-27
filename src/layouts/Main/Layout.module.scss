@@ -1,34 +1,18 @@
 .layout {
-  height: 100dvh;
+  min-height: 100dvh;
+  height: max-content;
 }
 
 .content {
   width: 100%;
-  overflow-y: auto;
-  padding: 20px 24px;
-  height: calc(100dvh - 80px);
-
-  @media (max-width: 2000px) {
-    padding: 0 30%;
-  }
-
-  @media (max-width: 1920px) {
-    padding: 0 20%;
-  }
-
-  @media (max-width: 1400px) {
-    padding: 0 14%;
-  }
-
-  @media (max-width: 1300px) {
-    padding: 0 10%;
-  }
+  height: max-content;
+  min-height: calc(100dvh - 80px);
 
   @media (max-width: 768px) {
-    padding: 0 5%;
+    padding: 0 10px;
   }
 
   @media (max-width: 600px) {
-    padding: 0 4%;
+    padding: 0 6px;
   }
 }

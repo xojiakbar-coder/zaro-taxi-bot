@@ -1,11 +1,9 @@
 export declare namespace IApi {
   export namespace Single {
     export interface Response {
-      data: IEntity.User;
+      data: IEntity.Driver;
     }
   }
-
-  export interface User {}
 }
 
 export declare namespace IEntity {
@@ -60,68 +58,68 @@ export declare namespace IEntity {
 
   export interface SelectedTariff {
     id: number;
-    created_at: string;
-    updated_at: string;
+    createdAt: string;
+    updatedAt: string;
     name: string;
     price: string;
-    duration_days: number;
-    ride_limit: number;
+    durationDays: number;
+    rideLimit: number;
     comission: number;
   }
 
   export interface CurrentTariff {
-    selected_tariff: SelectedTariff;
-    is_paid: boolean;
-    paid_at: string;
-    tariff_end: string;
+    selectedTariff: SelectedTariff;
+    isPaid: boolean;
+    paidAt: string;
+    tariffEnd: string;
   }
 
   interface Passenger {
     id: number;
-    full_name: string;
-    phone_number: string;
-    telegram_id: string;
-    promo_code: string;
-    cashback_percentage: number;
-    cashback_amount: number;
+    fullName: string;
+    phoneNumber: string;
+    telegramId: string;
+    promoCode: string;
+    cashbackPercentage: number;
+    cashbackAmount: number;
   }
 
   export interface Bookings {
     id: number;
     passenger: Passenger;
-    created_at: string; // ISO date-time string
-    updated_at: string; // ISO date-time string
-    front_seat: boolean;
-    extra_luggage: string;
-    is_delivery: boolean;
-    ride_price: string; // This is a string in the data, but you might convert to number
-    is_cashback_used: boolean;
-    cashback_used_percent: number;
-    payment_type: string;
-    date_of_departure: string; // ISO date-time string
-    car_type: string;
-    payment_screenshot: string | null;
-    route: number;
+    createdAt: string;
+    updatedAt: string;
+    frontSeat: boolean;
+    extraLuggage: string;
+    isDelivery: boolean;
+    ridePrice: string;
+    isCashbackUsed: boolean;
+    cashbackUsedPercent: number;
+    paymentType: string;
+    dateOfDeparture: string;
+    carType: string;
+    paymentScreenshot: string | null;
+    routeId: number;
   }
 
   export interface RecentRide {
     id: number;
-    commission_payment_screenshot: string | null;
-    created_at: string;
-    updated_at: string;
-    is_completed: boolean;
-    driver: number;
+    commissionPaymentScreenshot: string | null;
+    createdAt: string;
+    updatedAt: string;
+    isCompleted: boolean;
+    driver: Driver;
     route: Route;
     bookings: Bookings[];
   }
 
   export interface Driver {
     id: number;
-    car_number: string;
-    car_model_name: string;
-    is_active: boolean;
-    current_tariff: CurrentTariff;
-    recent_rides: RecentRide[];
+    carNumber: string;
+    isActive: boolean;
+    carModelName: string;
+    currentTariff: CurrentTariff;
+    recentRides: RecentRide[];
   }
 
   export interface Tariff {
@@ -142,7 +140,7 @@ export declare namespace IQuery {
   }
 
   export interface Single {
-    item: IEntity.User;
+    item: IEntity.Driver;
   }
 
   export interface Delete {

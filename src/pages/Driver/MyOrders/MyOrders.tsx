@@ -6,11 +6,11 @@ import { FaChevronDown } from 'react-icons/fa';
 import EmptyPage from '@/components/EmptyPage';
 // import CompletedOrders from './CompletedOrders';
 import SpinnerLoader from '@/components/Loader/Spinner';
-import { useDriver } from '@/modules/driver/hooks/useDriver';
 import useDeleteRide from '@/modules/driver/hooks/useDelete';
 import Notification from '@/components/Notification/Notification';
-import { useStoredTelegramUser } from '@/modules/order/hooks/getStoredUser';
 import { Button, Flex, Group, Text, Title, Tree, type TreeNodeData } from '@mantine/core';
+import { useDriver } from '@/modules/driver/hooks';
+import { useStoredUser } from '@/modules/order/hooks';
 
 const transformBookingsToTreeData = (bookings: any[]): TreeNodeData[] => {
   return bookings?.map(booking => ({
@@ -32,30 +32,25 @@ const transformBookingsToTreeData = (bookings: any[]): TreeNodeData[] => {
 };
 
 const MyOrders = () => {
-  const user = useStoredTelegramUser();
-  const { data, loading, fetchData, error, success } = useDriver();
+  const user = useStoredUser();
+  const { item, isLoading, isError, isSuccess } = useDriver();
   const { deleteOrder, success: deleteSuccess } = useDeleteRide();
   const [activeOrder, setActiveOrder] = useState<any>(null);
   const bookings = transformBookingsToTreeData(activeOrder?.bookings);
 
   useEffect(() => {
-    if (user) fetchData();
-  }, [user, fetchData]);
-
-  useEffect(() => {
-    if ((data?.recent_rides ?? []).length > 0) {
-      setActiveOrder((data?.recent_rides ?? [])[0]);
+    if ((item?.recentRides ?? []).length > 0) {
+      setActiveOrder((item?.recentRides ?? [])[0]);
     } else {
       setActiveOrder(null);
     }
-  }, [data]);
+  }, [item]);
 
   const handleDelete = async (ride_id: number) => {
-    await deleteOrder(user?.id ?? '', ride_id);
-    fetchData();
+    await deleteOrder(user?.telegram_id ?? '', ride_id);
   };
 
-  if (!activeOrder && !loading) {
+  if (!activeOrder && !isLoading) {
     return (
       <EmptyPage
         internalLink="/driver/new-order"
@@ -65,7 +60,7 @@ const MyOrders = () => {
     );
   }
 
-  if (loading) return <SpinnerLoader />;
+  if (isLoading) return <SpinnerLoader />;
 
   return (
     <div className={styles.myOrdersWrapper}>
@@ -145,7 +140,7 @@ const MyOrders = () => {
           Buyurtma muvaffaqiyatli o‘chirildi.
         </Notification>
       )}
-      {error && !success && (
+      {isError && !isSuccess && (
         <Notification
           message
           slowHidden

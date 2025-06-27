@@ -2,8 +2,8 @@
 @import './base/variable.css';
 
 @tailwind base;
-@tailwind components;
 @tailwind utilities;
+@tailwind components;
 
 *,
 *::after,

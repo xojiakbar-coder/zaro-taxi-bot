@@ -1,44 +1,33 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 import styles from './MyOrders.module.scss';
-import * as Types from '@/modules/order/types';
+import * as DriverType from '@/modules/order/types';
 import SpinnerLoader from '@/components/Loader/Spinner';
 
 import { Button } from '@/components/Button';
 import EmptyPage from '@/components/EmptyPage';
-import Notification from '@/components/Notification/Notification';
 
 import dayjs from 'dayjs';
-import useList from '@/modules/myorders/hooks/useList';
-import { Group, Text, Title, Tree, type TreeNodeData } from '@mantine/core';
-import useDeleteOrder from '@/modules/myorders/hooks/useDelete';
 import { FaChevronDown } from 'react-icons/fa';
+import { useDelete, useList } from '@/modules/myorders/hooks';
+import { Group, Text, Title, Tree, type TreeNodeData } from '@mantine/core';
 
-const transformBookingsToTreeData = (item: Types.IEntity.MyOrders): TreeNodeData[] => {
-  if (!item?.related_ride) {
-    return [
-      {
-        label: 'Hozircha biriktirilmagan',
-        value: `unassigned-${item.id}`
-      }
-    ];
-  }
-
+const transformBookingsToTreeData = (relatedRide: DriverType.IEntity.IRide): TreeNodeData[] => {
   return [
     {
-      label: item?.related_ride.driver.full_name,
-      value: `item-${item.id}`,
+      label: relatedRide.driver.fullName,
+      value: `item-${relatedRide.id}`,
       children: [
         {
-          label: `Mashina raqami: ${item.related_ride.driver.car_number}`,
-          value: `date_of_departure-${item.id}`
+          label: `Mashina raqami: ${relatedRide.driver.carNumber}`,
+          value: `date_of_departure-${relatedRide.id}`
         },
         {
-          label: `Mashina turi: ${item.related_ride.driver.car_model}`,
-          value: `car_type-${item.id}`
+          label: `Mashina turi: ${relatedRide.driver.carModelName}`,
+          value: `car_type-${relatedRide.id}`
         },
         {
-          label: `Telefon raqam: ${item?.related_ride.driver?.phone_number || 'Topilmadi'}`,
-          value: `phone-${item.id}`
+          label: `Telefon raqam: ${relatedRide.driver?.phoneNumber || 'Topilmadi'}`,
+          value: `phone-${relatedRide.id}`
         }
       ]
     }
@@ -46,22 +35,13 @@ const transformBookingsToTreeData = (item: Types.IEntity.MyOrders): TreeNodeData
 };
 
 const MyOrders = () => {
-  const userStr = localStorage.getItem('telegramUser');
-  const user: Types.IEntity.User | null = userStr ? JSON.parse(userStr) : null;
-  const { data, error, loading, success, fetchData } = useList();
-  const { deleteOrder, success: deleteSuccess } = useDeleteOrder();
+  const [deletingId, setDeletingId] = useState<number | null>(null);
+  const { items, isLoading, isSuccess } = useList();
+  const { mutate, isPending } = useDelete();
 
-  useEffect(() => {
-    if (user) fetchData(user?.id);
-  }, [user?.id ?? '']);
+  if (isLoading) return <SpinnerLoader />;
 
-  const handleDelete = async (orderId: string) => {
-    await deleteOrder(user?.id ?? '', orderId);
-    fetchData(user?.id ?? '');
-  };
-
-  if (loading) return <SpinnerLoader />;
-  if ((!success || success) && !data.length) {
+  if (!isLoading && items.length === 0) {
     return (
       <EmptyPage
         internalLink="/"
@@ -78,31 +58,31 @@ const MyOrders = () => {
         Buyurtmalaringiz ro'yxati
       </Title>
       <div className={styles.myOrdersWrapper}>
-        {success &&
-          data.length > 0 &&
-          data.map(item => (
+        {isSuccess &&
+          items.length > 0 &&
+          items.map(item => (
             <div key={item.id} className={styles.orderCard}>
               <div className={styles.orderItem}>
                 <span>Buyurtma ID:</span> {item.id}
               </div>
               <div className={styles.orderItem}>
                 <span>Yaratilgan:</span>{' '}
-                {`${dayjs(item.created_at).format('YYYY-MM-DD')} - ${dayjs(item.created_at).format('HH:mm:ss')}`}
+                {`${dayjs(item.createdAt).format('YYYY-MM-DD')} - ${dayjs(item.createdAt).format('HH:mm:ss')}`}
               </div>
               <div className={styles.orderItem}>
                 <span>Jo‘nash sanasi:</span>{' '}
-                {`${dayjs(item.date_of_departure).format('YYYY-MM-DD')} - ${dayjs(item.date_of_departure).format(
+                {`${dayjs(item.dateOfDeparture).format('YYYY-MM-DD')} - ${dayjs(item.dateOfDeparture).format(
                   'HH:mm:ss'
                 )}`}
               </div>
               <div className={styles.orderItem}>
-                <span>Avto turi:</span> {item.car_type}
+                <span>Avto turi:</span> {item.carType}
               </div>
               <div className={styles.orderItem}>
-                <span>Old o‘rindiq:</span> {item.front_seat ? 'Ha' : 'Yo‘q'}
+                <span>Old o‘rindiq:</span> {item.frontSeat ? 'Ha' : 'Yo‘q'}
               </div>
               <div className={styles.orderItem}>
-                <span>To‘lov turi:</span> {item.payment_type === 'Cash' ? 'Naqd' : 'Kartadan'}
+                <span>To‘lov turi:</span> {item.paymentType === 'Cash' ? 'Naqd' : 'Kartadan'}
               </div>
               <div className={styles.orderItem}>
                 <span>Jo‘nash manzili:</span> {item?.route?.start?.name ?? ''}
@@ -112,46 +92,51 @@ const MyOrders = () => {
               </div>
               <div className={styles.orderItem}>
                 <span>Haydo‘vchi:</span>
-                <Tree
-                  my="sm"
-                  data={transformBookingsToTreeData(item)}
-                  levelOffset={25}
-                  renderNode={({ node, expanded, hasChildren, elementProps }) => (
-                    <div
-                      {...elementProps}
-                      style={{
-                        marginBottom: 16,
-                        ...(elementProps.style || {})
-                      }}
-                    >
-                      <Group gap={8}>
-                        {hasChildren && (
-                          <FaChevronDown
-                            size={16}
-                            style={{ transform: expanded ? 'rotate(0deg)' : 'rotate(-90deg)' }}
-                          />
-                        )}
-                        <Text>{node.label}</Text>
-                      </Group>
-                    </div>
-                  )}
-                />
+                {item.relatedRide !== null ? (
+                  <Tree
+                    my="sm"
+                    data={transformBookingsToTreeData(item.relatedRide)}
+                    levelOffset={25}
+                    renderNode={({ node, expanded, hasChildren, elementProps }) => (
+                      <div
+                        {...elementProps}
+                        style={{
+                          marginBottom: 16,
+                          ...(elementProps.style || {})
+                        }}
+                      >
+                        <Group gap={8}>
+                          {hasChildren && (
+                            <FaChevronDown
+                              size={16}
+                              style={{ transform: expanded ? 'rotate(0deg)' : 'rotate(-90deg)' }}
+                            />
+                          )}
+                          <Text>{node.label}</Text>
+                        </Group>
+                      </div>
+                    )}
+                  />
+                ) : (
+                  <Text>Biriktirilmagan</Text>
+                )}
               </div>
 
-              <Button color="red" size="sm" className="mt-[14px]" onClick={() => handleDelete(item?.id)}>
+              <Button
+                color="red"
+                size="sm"
+                className="mt-[14px]"
+                loading={deletingId === +item.id && !isPending}
+                disabled={deletingId === +item.id && !isPending}
+                onClick={() => {
+                  setDeletingId(+item.id);
+                  mutate({ id: +item.id });
+                }}
+              >
                 O‘chirish
               </Button>
             </div>
           ))}
-
-        {deleteSuccess && (
-          <Notification withCloseButton={false} message color="green" mt="lg">
-            Buyurtma muvaffaqiyatli o‘chirildi.
-          </Notification>
-        )}
-        {error && !!data.length && (
-          <Notification color="red" variant="error" withCloseButton title="Xatolik yuz berdi qayt urinib ko‘ring" />
-        )}
       </div>
     </div>
   );

@@ -5,16 +5,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Input, Select, Text, Group, FileButton } from '@mantine/core';
 
 import { Button } from '@/components/Button';
-import { useTariffsList } from '@/modules/driver/hooks/useTariffList';
+import { useDriver } from '@/modules/driver/hooks';
 import SpinnerLoader from '@/components/Loader/Spinner';
 import { driverTariffSchema } from '@/common/services/formSchema';
-import { useDriver } from '@/modules/driver/hooks/useDriver';
-import { useStoredTelegramUser } from '@/modules/order/hooks/getStoredUser';
+import { useTariffsList } from '@/modules/driver/hooks/useTariffList';
 import { useTariffFrom, type FormValues } from '@/modules/driver/hooks/useTariffForm';
 
 const Form: React.FC = () => {
-  const user = useStoredTelegramUser();
-  const { data: driver, fetchData: fetchDriver } = useDriver();
+  const { item } = useDriver();
   const { data: tariffList, loading: tariffsLoading, success } = useTariffsList();
   const { fetchData: submitTariff, loading, error, success: submitSuccess } = useTariffFrom();
   const [fileName, setFileName] = useState<string | null>(null);
@@ -34,14 +32,10 @@ const Form: React.FC = () => {
   });
 
   useEffect(() => {
-    if (user) fetchDriver();
-  }, [user, fetchDriver]);
-
-  useEffect(() => {
-    if (driver?.id) {
-      setValue('driver', `${driver.id}`);
+    if (item?.id) {
+      setValue('driver', `${item.id}`);
     }
-  }, [driver, setValue]);
+  }, [item, setValue]);
 
   const tariffOptions =
     tariffList?.map(tariff => ({
@@ -101,7 +95,7 @@ const Form: React.FC = () => {
           </Text>
         )}
 
-        <Button type="submit" variant="filled" justify="center" mt="lg" loading={loading} disabled={!driver?.id}>
+        <Button type="submit" variant="filled" justify="center" mt="lg" loading={loading} disabled={!item?.id}>
           Yuborish
         </Button>
       </form>

@@ -1,167 +1,92 @@
-import dayjs from 'dayjs';
-import classes from '../Order.module.scss';
-import { Chip, Input } from '@mantine/core';
-import React, { useEffect, useState } from 'react';
+import styles from '../CreateOrder.module.scss';
+
+import * as Fields from '@/containers/Fields';
+
+import { Spacer } from '@/components/Spacer/Spacer';
 import { IoIosCash, IoIosCard } from 'react-icons/io';
-import { TimeInput, DatePickerInput } from '@mantine/dates';
-import { PaymentCard } from '@/components/Card/PaymentCard';
+import { CheckIcon, Group, Radio, Stack, Text } from '@mantine/core';
 
-import { CarTypeCard } from '@/components/Card/CarTypeCard';
-import comfortCarIcon from '../../../../assets/images/comfort-car.svg';
-import standartCarIcon from '../../../../assets/images/standart-car.svg';
-import bussinessCarIcon from '../../../../assets/images/bussiness-car.svg';
+import comfortCarIcon from '../../../../assets/images/comfort-car.webp';
+import bussinessCarIcon from '../../../../assets/images/bussiness-car.webp';
 
-interface IProps {
-  formData: any;
-  setFormData: any;
-}
+const Form = () => {
+  const carTypesData = [
+    { icon: comfortCarIcon, content: 'Standart', value: 'Standart' },
+    { icon: comfortCarIcon, content: 'Comfort', value: 'Comfort' },
+    { icon: bussinessCarIcon, content: 'Bussiness', value: 'Biznes' }
+  ].map(item => (
+    <Radio.Card className={styles.root} radius="md" value={item.value} key={item.value}>
+      <Group wrap="nowrap" align="center">
+        <Radio.Indicator icon={CheckIcon} />
+        <div className={styles.radioRontent}>
+          <Text className={styles.label}>{item.content}</Text>
+        </div>
+      </Group>
+    </Radio.Card>
+  ));
 
-const FormBody: React.FC<IProps> = ({ formData, setFormData }) => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-  const [selectedTime, setSelectedTime] = useState<Date | null>(new Date());
-
-  useEffect(() => {
-    if (selectedDate && selectedTime) {
-      const combined = dayjs(selectedDate).hour(dayjs(selectedTime).hour()).minute(dayjs(selectedTime).minute());
-
-      const formatted = combined.format('YYYY-MM-DDTHH:mm');
-
-      setFormData((prev: any) => ({
-        ...prev,
-        date_of_departure: formatted
-      }));
-    }
-  }, [selectedDate, selectedTime]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const target = e.target as HTMLInputElement;
-    const { name, value, type, checked } = target;
-
-    setFormData((prev: any) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
-  };
+  const paymentTypeData = [
+    { icon: IoIosCash, content: 'Naqd', value: 'Cash' },
+    { icon: IoIosCard, content: 'Karta', value: 'Card' }
+  ].map(item => {
+    // const { icon: Icon } = item;
+    return (
+      <Radio.Card className={styles.root} radius="md" value={item.value} key={item.value}>
+        <Group wrap="nowrap" align="center">
+          <Radio.Indicator icon={CheckIcon} />
+          {/* <Icon /> */}
+          <div className={styles.radioRontent}>
+            <Text className={styles.label}>{item.content}</Text>
+          </div>
+        </Group>
+      </Radio.Card>
+    );
+  });
 
   return (
     <>
-      <div className={classes.rowWrapper}>
-        <Chip
-          name="front_seat"
-          color="rgb(13, 49, 255)"
-          checked={formData.front_seat}
-          className={classes.formCheckbox}
-          onChange={(checked: boolean) =>
-            setFormData((prev: any) => ({
-              ...prev,
-              front_seat: checked
-            }))
-          }
-        >
+      <Fields.Text
+        name="extraLuggage"
+        label="Qo‘shimcha yuk"
+        className={styles.formInput}
+        placeholder="Qo‘shimcha yuk haqida yozing"
+      />
+
+      <Spacer />
+
+      <Fields.DateTimePicker
+        name="dateOfDeparture"
+        className={styles.formInput}
+        label="Jo‘nash sanasi va vaqtini:"
+        placeholder="Jo‘nash sana va vaqtini tanlang"
+      />
+
+      <Spacer />
+
+      <Fields.RadioGroup name="carType" label="Mashina turi:">
+        <Stack gap="md">{carTypesData}</Stack>
+      </Fields.RadioGroup>
+
+      <Spacer />
+
+      <Fields.RadioGroup name="paymentType" label="To‘lov turi:">
+        <Stack gap="md">{paymentTypeData}</Stack>
+      </Fields.RadioGroup>
+
+      <Spacer />
+
+      <div className={styles.rowWrapper}>
+        <Fields.Chip name="frontSeat" color="rgb(13, 49, 255)">
           Oldingi o‘rindiqni band qilish
-        </Chip>
-        <Chip
-          name="is_cashback_used"
-          color="rgb(13, 49, 255)"
-          className={classes.formCheckbox}
-          checked={formData.is_cashback_used}
-          onChange={(checked: boolean) =>
-            setFormData((prev: any) => ({
-              ...prev,
-              is_cashback_used: checked
-            }))
-          }
-        >
+        </Fields.Chip>
+        <Fields.Chip name="isCashbackUsed" color="rgb(13, 49, 255)">
           Keshbekni ishlatish
-        </Chip>
+        </Fields.Chip>
       </div>
 
-      <Input.Wrapper className={classes.columnWrapper} label="Qo‘shimcha yuk:">
-        <Input
-          size="md"
-          type="text"
-          autoComplete="off"
-          name="extra_luggage"
-          onChange={handleChange}
-          className={classes.formInput}
-          value={formData.extra_luggage}
-          placeholder="Qo‘shimcha yuk haqida yozing"
-        />
-      </Input.Wrapper>
-
-      <Input.Wrapper label="Mashina turi:" className={classes.radioGroup}>
-        <div className={classes.carTypeWrapper}>
-          {[
-            { icon: comfortCarIcon, content: 'Standart', value: 'Standart' },
-            { icon: standartCarIcon, content: 'Comfort', value: 'Comfort' },
-            { icon: bussinessCarIcon, content: 'Bussiness', value: 'Biznes' }
-          ].map(item => (
-            <CarTypeCard
-              key={item.value}
-              carSvg={item.icon}
-              value={item.value}
-              content={item.content}
-              active={formData.car_type === item.value}
-              onClick={() => setFormData((prev: any) => ({ ...prev, car_type: item.value }))}
-            />
-          ))}
-        </div>
-      </Input.Wrapper>
-      <div className={classes.dateFiledsWrapper}>
-        <Input.Wrapper label="Jo‘nash sanasi:" className={classes.columnWrapper}>
-          <DatePickerInput
-            value={selectedDate ? dayjs(selectedDate).format('YYYY-MM-DD') : undefined}
-            onChange={(value: string) => {
-              if (value) {
-                setSelectedDate(dayjs(value, 'YYYY-MM-DD').toDate());
-              } else {
-                setSelectedDate(null);
-              }
-            }}
-            className={classes.formDatePicker}
-            placeholder="Sanani tanlang"
-            clearable
-          />
-        </Input.Wrapper>
-
-        <Input.Wrapper label="Jo‘nash vaqti:" className={classes.columnWrapper}>
-          <TimeInput
-            value={selectedTime ? dayjs(selectedTime).format('HH:mm') : undefined}
-            onChange={event => {
-              const value = event.target.value;
-              if (value) {
-                const [hours, minutes] = value.split(':').map(Number);
-                const newDate = new Date(selectedTime || new Date());
-                newDate.setHours(hours, minutes, 0, 0);
-                setSelectedTime(newDate);
-              } else {
-                setSelectedTime(null);
-              }
-            }}
-            placeholder="Soatni tanlang"
-            className={classes.formInput}
-          />
-        </Input.Wrapper>
-      </div>
-      <Input.Wrapper label="To‘lov turi:" className={classes.columnWrapper}>
-        <div className={classes.rowWrapper}>
-          {[
-            { icon: IoIosCash, content: 'Naqd', value: 'Cash' },
-            { icon: IoIosCard, content: 'Karta', value: 'Card' }
-          ].map(item => (
-            <PaymentCard
-              key={item.value}
-              icon={item.icon}
-              value={item.value}
-              content={item.content}
-              active={formData.payment_type === item.value}
-              onClick={() => setFormData((prev: any) => ({ ...prev, payment_type: item.value }))}
-            />
-          ))}
-        </div>
-      </Input.Wrapper>
+      <Spacer />
     </>
   );
 };
 
-export default FormBody;
+export default Form;

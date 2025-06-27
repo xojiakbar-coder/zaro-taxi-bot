@@ -1,47 +1,28 @@
-import { useState } from 'react';
-import { BASE_URL } from '@/common/config/api';
+import { useStoredUser } from '@/modules/order/hooks';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-export const useDeleteOrder = () => {
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+import * as Api from '../api.ts';
+import * as Types from '../types.ts';
+import * as Mappers from '../mappers.ts';
 
-  const deleteOrder = async (telegram_id: string, order_id: string) => {
-    setLoading(true);
-    setSuccess(false);
-    setError(null);
+const useDelete = () => {
+  const telegramId = useStoredUser()?.telegram_id || '';
+  const queryClient = useQueryClient();
 
-    try {
-      const response = await fetch(`${BASE_URL}/passenger/bookings/delete/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          telegram_id,
-          booking_id: order_id
-        })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(`O'chirishda xatolik: ${JSON.stringify(errorData)}`);
-      }
-
-      setSuccess(true);
-    } catch (err: any) {
-      setError(err.message || 'Xatolik yuz berdi.');
-    } finally {
-      setLoading(false);
+  return useMutation({
+    mutationFn: async ({ id }: Types.IQuery.Delete): Promise<Types.IEntity.MyOrders> => {
+      const { data } = await Api.Delete({ telegramId, bookingId: id });
+      return Mappers.PassengerOrders(data && data);
+    },
+    onSuccess: () => {
+      setTimeout(() => {
+        queryClient.invalidateQueries({
+          queryKey: ['myOrders', 'list'],
+          exact: true
+        });
+      }, 1000);
     }
-  };
-
-  return {
-    deleteOrder,
-    loading,
-    success,
-    error
-  };
+  });
 };
 
-export default useDeleteOrder;
+export default useDelete;

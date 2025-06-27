@@ -1,28 +1,21 @@
-// import React from 'react';
-// import { useController } from 'react-hook-form';
-// import type { UseControllerProps } from 'react-hook-form';
+import { Checkbox as MantineCheckbox, type CheckboxProps } from '@mantine/core';
+import { useController, type FieldValues, type UseControllerProps } from 'react-hook-form';
 
-// import CheckboxBase from '@/components/components/Checkbox';
-// import type { IProps as CheckboxProps } from '@/components/components/Checkbox';
+type IProps<T extends FieldValues> = UseControllerProps<T> &
+  Omit<CheckboxProps, 'name' | 'value' | 'onChange' | 'error'>;
 
-// interface IProps extends CheckboxProps, UseControllerProps {
-//   name: string;
-// }
+export function Checkbox<T extends FieldValues>({ control, name, rules, defaultValue, ...rest }: IProps<T>) {
+  const {
+    field,
+    fieldState: { error }
+  } = useController<T>({
+    name,
+    control,
+    rules,
+    defaultValue
+  });
 
-// const Checkbox: React.FC<IProps> = ({ name, onChange, ...props }) => {
-//   const { field } = useController({ name });
+  return <MantineCheckbox {...field} {...rest} checked={!!field.value} error={error?.message} />;
+}
 
-//   return (
-//     <CheckboxBase
-//       {...field}
-//       {...props}
-//       checked={field.value}
-//       onChange={value => {
-//         onChange && onChange(value);
-//         field.onChange(value);
-//       }}
-//     />
-//   );
-// };
-
-// export default Checkbox;
+export default Checkbox;

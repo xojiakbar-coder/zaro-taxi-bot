@@ -4,115 +4,25 @@ export declare namespace IApi {
       data: IEntity.Passenger;
     }
   }
-
-  export interface Passenger {}
 }
 
 export declare namespace IEntity {
-  // export interface Order {
-  //   telegram_id: string;
-  //   route: number;
-  //   is_delivery: boolean;
-  //   ride_price: string | null;
-  //   cashback_used_percent: number | null;
-  //   front_seat: boolean;
-  //   extra_luggage: string | null;
-  //   is_cashback_used: boolean;
-  //   car_type: 'Standart' | 'Comfort' | 'Biznes';
-  //   date_of_departure: string;
-  //   payment_type: 'Cash' | 'Card';
-  // }
-
-  // interface Route {
-  //   id: number;
-  //   start: {
-  //     id: number;
-  //     name: string;
-  //   };
-  //   finish: {
-  //     id: number;
-  //     name: string;
-  //   };
-  // }
-
-  // interface MyOrders {
-  //   id: string;
-  //   route: Route;
-  //   created_at: string;
-  //   updated_at: boolean;
-  //   ride_price: string | null;
-  //   front_seat: boolean;
-  //   extra_luggage: string | null;
-  //   date_of_departure: string;
-  //   car_type: 'Standart' | 'Comfort' | 'Biznes';
-  //   payment_type: 'Cash' | 'Card';
-  // }
-
   export interface Passenger {
     id: number;
-    full_name: string;
-    telegram_id: string;
+    name: string;
+    telegramId: string;
     promo_code?: string;
-    phone_number: string;
-    cashback_percentage: string;
-    cashback_amount: boolean;
+    phoneNumber: string;
+    promoCode: string;
+    cashbackPercentage: number;
+    cashbackAmount: number;
   }
-
-  // export interface SelectedTariff {
-  //   id: number;
-  //   created_at: string;
-  //   updated_at: string;
-  //   name: string;
-  //   price: string;
-  //   duration_days: number;
-  //   ride_limit: number;
-  //   comission: number;
-  // }
-
-  // export interface CurrentTariff {
-  //   selected_tariff: SelectedTariff;
-  //   is_paid: boolean;
-  //   paid_at: string;
-  //   tariff_end: string;
-  // }
-
-  // export interface RecentRide {
-  //   id: number;
-  //   commission_payment_screenshot: string | null;
-  //   created_at: string;
-  //   updated_at: string;
-  //   is_completed: boolean;
-  //   driver: number;
-  //   route: number;
-  //   bookings: unknown[];
-  // }
-
-  // export interface Driver {
-  //   id: number;
-  //   car_number: string;
-  //   car_model_name: string;
-  //   is_active: boolean;
-  //   current_tariff: CurrentTariff;
-  //   recent_rides: RecentRide[];
-  // }
-
-  // export interface Tariff {
-  //   id: number;
-  //   name: string;
-  //   price: string;
-  //   comission: number;
-  //   updated_at: string;
-  //   created_at: string;
-  //   ride_limit: number;
-  //   duration_days: number;
-  // }
 }
 
 export declare namespace IQuery {
-  // export interface List {
-  //   items: IEntity.Passenger;
-  // }
-
+  export interface List {
+    items: IEntity.Passenger[];
+  }
   export interface Single {
     item: IEntity.Passenger;
   }

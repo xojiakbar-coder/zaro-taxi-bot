@@ -1,48 +1,33 @@
-import { useState } from 'react';
-import * as Types from '@/modules/order/types';
-import { BASE_URL } from '@/common/config/api';
+import { useQuery } from '@tanstack/react-query';
+import { useStoredUser } from '@/modules/order/hooks';
 
-export const useList = () => {
-  const [data, setData] = useState<Types.IEntity.MyOrders[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+import * as Api from '../api';
+import * as Types from '../types';
+import * as Mappers from '../mappers';
 
-  const fetchData = async (telegram_id: string) => {
-    setLoading(true);
-    setError(null);
-    setSuccess(false);
-    try {
-      const response = await fetch(`${BASE_URL}/passenger/bookings/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ telegram_id })
-      });
+interface IProps {
+  enabled?: boolean;
+}
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(`Buyurtma olishda xatolik yuz berdi: ${JSON.stringify(errorData)}`);
-      }
+const useList = ({ enabled = true }: IProps = {}) => {
+  const telegram_id = useStoredUser()?.telegram_id;
 
-      const result: Types.IEntity.MyOrders[] = await response.json();
-      setData(result);
-      setSuccess(true);
-    } catch (err: any) {
-      setError(err.message || 'Xatolik yuz berdi.');
-    } finally {
-      setLoading(false);
-    }
-  };
+  const initialData = { items: [] } as Types.IQuery.List;
 
-  return {
-    data,
-    error,
-    success,
-    loading,
-    fetchData
-  };
+  const { data = initialData, ...args } = useQuery<Types.IQuery.List, string>({
+    queryKey: ['myOrders', 'list'],
+    queryFn: async () => {
+      const { data } = await Api.PassengerOrders(telegram_id || '');
+
+      return {
+        items: Array.isArray(data) ? data.reverse().map(Mappers.PassengerOrders) : []
+      };
+    },
+    initialData,
+    enabled
+  });
+
+  return { ...args, ...data };
 };
 
 export default useList;

@@ -1,8 +1,9 @@
 .container {
   display: flex;
-  height: 100%;
-  padding: 20px 0 0 0;
+  padding: 30px 24px;
+  height: max-content;
   flex-direction: column;
+  min-height: var(--max-height);
 }
 
 .header {

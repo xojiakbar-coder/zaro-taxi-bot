@@ -1,29 +1,28 @@
-// import React from 'react';
-// import { get } from 'radash';
-// import { useController } from 'react-hook-form';
-// import type { UseControllerProps } from 'react-hook-form';
+import { TextInput, type TextInputProps } from '@mantine/core';
+import { useController, type FieldValues, type UseControllerProps } from 'react-hook-form';
 
-// import Input from '../../components/components/Input';
-// import type { TextInputProps } from '../../components/components/Input/types';
+type IProps<T extends FieldValues> = UseControllerProps<T> &
+  Omit<TextInputProps, 'name' | 'value' | 'onChange' | 'error'>;
 
-// interface IProps extends TextInputProps, UseControllerProps {
-//   name: string;
-// }
+export function Text<T extends FieldValues>({ control, name, rules, defaultValue, ...rest }: IProps<T>) {
+  const {
+    field,
+    fieldState: { error }
+  } = useController<T>({
+    name,
+    control,
+    rules,
+    defaultValue
+  });
 
-// const Text: React.FC<IProps> = ({ name, ...props }) => {
-//   const {
-//     field,
-//     fieldState: { invalid, error }
-//   } = useController({ name });
+  return (
+    <TextInput
+      {...rest}
+      {...field}
+      error={error?.message}
+      value={field.value === undefined || field.value === null ? '' : field.value}
+    />
+  );
+}
 
-//   return (
-//     <Input
-//       {...field}
-//       {...props}
-//       message={invalid ? get(error, 'message') : undefined}
-//       state={invalid ? 'error' : undefined}
-//     />
-//   );
-// };
-
-// export default Text;
+export default Text;
