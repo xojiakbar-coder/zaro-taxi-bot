@@ -10,10 +10,9 @@ export declare namespace IEntity {
   export interface Passenger {
     id: number;
     name: string;
-    telegramId: string;
-    promo_code?: string;
-    phoneNumber: string;
     promoCode: string;
+    telegramId: string;
+    phoneNumber: string;
     cashbackPercentage: number;
     cashbackAmount: number;
   }

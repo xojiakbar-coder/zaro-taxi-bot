@@ -9,6 +9,7 @@ export const PassengerOrders = (item?: any): Types.IEntity.MyOrders => ({
   route: Route(get(item, 'route', {})),
   createdAt: get(item, 'created_at', ''),
   updatedAt: get(item, 'updated_at', ''),
+  ridePrice: get(item, 'updated_at', ''),
   frontSeat: get(item, 'front_seat', false),
   dateOfDeparture: get(item, 'date_of_departure', ''),
   isDelivery: get(item, 'is_delivery', false),
@@ -18,7 +19,7 @@ export const PassengerOrders = (item?: any): Types.IEntity.MyOrders => ({
   paymentType: get(item, 'payment_type', ''),
   carType: get(item, 'car_type', ''),
   passenger: get(item, 'passenger'),
-  relatedRide: RelatedRide(get(item, 'related_ride', {}))
+  relatedRide: get(item, 'related_ride') ? RelatedRide(get(item, 'related_ride')) : null
 });
 
 export const RelatedRide = (item?: any): DriverType.IEntity.IRide => ({

@@ -1,6 +1,6 @@
 import * as Types from '../types';
-import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const useUser = (): Types.IEntity.User | null => {
   const { hash } = useLocation();

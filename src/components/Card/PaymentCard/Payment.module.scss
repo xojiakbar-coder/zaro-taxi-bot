@@ -1,3 +1,23 @@
+.outer_container {
+  display: grid;
+  grid-template-columns: 200px 200px;
+  gap: 20px;
+  width: 100%;
+  margin-top: 6px;
+
+  @media (max-width: 567px) {
+    gap: 8px;
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: 200px 200px;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 .container {
   display: flex;
   cursor: pointer;
@@ -6,19 +26,11 @@
   justify-content: center;
   min-width: 150px;
   gap: 10px;
-  width: 170px;
+  width: 100%;
   padding: 12px 8px;
   border-radius: 10px;
   border: 1px solid rgb(19, 223, 148);
   background: linear-gradient(90deg, rgb(15, 139, 94), rgb(10, 140, 99), rgb(6, 168, 127));
-
-  @media (min-width: 567px) {
-    width: 200px;
-  }
-
-  @media (max-width: 567px) {
-    width: 150px;
-  }
 }
 
 .icon {

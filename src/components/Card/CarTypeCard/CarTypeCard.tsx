@@ -1,23 +1,45 @@
-import React from 'react';
-import { Image, Text } from '@mantine/core';
+import React, { useState } from 'react';
+import { Image, Radio, Text } from '@mantine/core';
+
+import comfortCar from '@/assets/images/comfort-car.webp';
+import standartCar from '@/assets/images/standart-car.webp';
+import bussinessCar from '@/assets/images/bussiness-car.webp';
 
 import styles from './CarTypeCard.module.scss';
 
-interface IProps {
-  carSvg: string;
-  content: string;
-  active: boolean;
-  onClick: () => void;
-  value: string | number;
-}
+interface IProps {}
 
-const PaymentCard: React.FC<IProps> = ({ active = false, carSvg, value, content, onClick }) => {
+const PaymentCard: React.FC<IProps> = () => {
+  const [value, setValue] = useState<string | null>(null);
+
   return (
-    <div onClick={onClick} title={value.toString()}>
-      <div className={`${styles.container} ${active ? styles.active : ''}`}>
-        <Image src={carSvg && carSvg} className={styles.carSvg} />
-      </div>
-      <Text className={styles.content}>{content}</Text>
+    <div className={styles.outer_container}>
+      <Radio.Card
+        value="Standart"
+        onClick={() => setValue('Standart')}
+        className={`${styles.container} ${value === 'Standart' && styles.active}`}
+      >
+        <Image src={standartCar} className={styles.car_photo} />
+        <Text className={styles.content}>Standar</Text>
+      </Radio.Card>
+
+      <Radio.Card
+        value="Comfort"
+        onClick={() => setValue('Comfort')}
+        className={`${styles.container} ${value === 'Comfort' && styles.active}`}
+      >
+        <Image src={comfortCar} className={styles.car_photo} />
+        <Text className={styles.content}>Comfort</Text>
+      </Radio.Card>
+
+      <Radio.Card
+        onClick={() => setValue('Biznes')}
+        value="Biznes"
+        className={`${styles.container} ${value === 'Biznes' && styles.active}`}
+      >
+        <Image src={bussinessCar} className={styles.car_photo} />
+        <Text className={styles.content}>Biznes</Text>
+      </Radio.Card>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-.emptyPage {
+.empty_page {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -6,6 +6,11 @@
   gap: 12px;
   height: max-content;
   min-height: var(--max-height);
+}
+
+.full_height {
+  height: 100dvh !important;
+  overflow: hidden !important;
 }
 
 .icon {
@@ -24,10 +29,10 @@
 }
 
 .subtitle {
-  font-size: 0.875rem;
+  font-size: 14px;
 }
 
 .button {
-  margin-top: 16px;
+  margin-top: 8px;
   height: 44px;
 }

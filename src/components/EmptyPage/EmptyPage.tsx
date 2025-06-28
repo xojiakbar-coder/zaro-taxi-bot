@@ -10,6 +10,7 @@ interface IProps {
   title: string;
   icon?: IconType;
   subtitle?: string;
+  fullHeight?: boolean;
   externalLink?: string;
   internalLink?: string;
   buttonContent?: string;
@@ -18,18 +19,18 @@ interface IProps {
 
 const EmptyPage: React.FC<IProps> = ({
   title,
-  icon,
+  icon: Icon,
   subtitle,
   externalLink = '',
   internalLink = '',
+  fullHeight = false,
   buttonContent = '',
   buttonOnClick
 }) => {
   const navigate = useNavigate();
-  const Icon = icon;
 
   return (
-    <div className={styles.emptyPage}>
+    <div className={`${styles.empty_page} ${fullHeight && styles.full_height}`}>
       {Icon ? <Icon className={styles.icon} /> : <LuInbox className={styles.icon} />}
       <Text size="lg" className={styles.title}>
         {title}
