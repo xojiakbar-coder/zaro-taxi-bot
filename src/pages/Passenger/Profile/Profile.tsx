@@ -1,9 +1,7 @@
 import styles from './Profile.module.scss';
 
+import { Avatar } from '@mantine/core';
 import { Button } from '@/components/Button';
-import { Avatar, SimpleGrid } from '@mantine/core';
-import { FaMoneyBill, FaTag } from 'react-icons/fa';
-import { LuPercent, LuPhone } from 'react-icons/lu';
 
 import { DataCard } from '@/components/Card/DataCard';
 import SpinnerLoader from '@/components/Loader/Spinner';
@@ -20,40 +18,24 @@ const Profile = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <Avatar src={userPhoto} radius="xl" size="lg" alt="Photo not found" />
+        {userPhoto && <Avatar src={userPhoto} radius="xl" size="lg" />}
+        {!userPhoto && (
+          <Avatar radius="xl" size="lg" color="blue">
+            {data?.item.name.charAt(0).toUpperCase()}
+          </Avatar>
+        )}
         <h2 className={styles.passengerfullName}>{data?.item.name || ''}</h2>
       </div>
-      <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="lg">
-        <DataCard
-          icon={LuPhone}
-          title="Telefon raqam"
-          value={data?.item.phoneNumber}
-          colors={{ iconBgColor: 'blue', iconColor: 'blue' }}
-        />
-        <DataCard
-          icon={LuPercent}
-          title="Cashback foiz"
-          value={`${data.item.cashbackPercentage}%`}
-          colors={{ iconBgColor: 'orange', iconColor: 'orange' }}
-        />
-        <DataCard
-          icon={FaMoneyBill}
-          title="Cashback miqdori"
-          value={`${data.item.cashbackAmount} so‘m`}
-          colors={{ iconBgColor: 'green', iconColor: 'green' }}
-        />
-        <DataCard
-          icon={FaTag}
-          title="Shaxsiy promokod"
-          value={data.item.promoCode}
-          colors={{ iconBgColor: 'green', iconColor: 'green' }}
-        />
-      </SimpleGrid>
+
+      <DataCard data={data.item} />
+
       <a
         className={styles.cashbackShare}
         href={`https://t.me/share/url?url=https://t.me/pitakuzrobot?start=${data?.item?.promoCode}&text=Link ustiga bosing va mening promokodim orqali cashback oling`}
       >
-        <Button variant="subtle">Do'st taklif qilish</Button>
+        <Button variant="filled" h={46}>
+          Do'stga promokod ulashish
+        </Button>
       </a>
     </div>
   );

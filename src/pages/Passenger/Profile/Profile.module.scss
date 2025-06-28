@@ -4,6 +4,10 @@
   height: max-content;
   flex-direction: column;
   min-height: var(--max-height);
+
+  @media (max-width: 768px) {
+    padding: 20px 4px;
+  }
 }
 
 .header {
@@ -21,6 +25,7 @@
 .cashbackShare {
   margin-top: 20px;
   color: #9599e8;
+  width: max-content;
 }
 
 .cashbackShare > button {
