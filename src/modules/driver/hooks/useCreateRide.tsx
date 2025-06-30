@@ -1,29 +1,52 @@
-import { useQuery } from '@tanstack/react-query';
-import { useStoredUser } from '@/modules/order/hooks';
+import { useMutation } from '@tanstack/react-query';
+import { notifications } from '@mantine/notifications';
+
+import { LuCalendarX, LuCheck } from 'react-icons/lu';
 
 import * as Api from '../api';
 import * as Types from '../types';
 import * as Mappers from '../mappers';
 
-const useCreateRide = () => {
-  const telegram_id = useStoredUser()?.telegram_id;
+type IProps = {
+  driverId: string;
+  routeId: number;
+};
 
-  const initialData = { item: Mappers.Driver() } as Types.IQuery.Single;
+const useCreateRide = () =>
+  useMutation<Types.IQuery.Single, string, IProps>({
+    mutationFn: async ({ routeId, driverId }) => {
+      if (!driverId) throw new Error('Driver ID is missing');
 
-  const { data = initialData, ...args } = useQuery<Types.IQuery.Single, string>({
-    queryKey: ['createRide', 'single', telegram_id],
-    queryFn: async () => {
-      const { data } = await Api.Driver(telegram_id || '');
+      const { data } = await Api.CreateRide({ driverId, routeId });
 
       return {
-        item: Mappers.Driver(data && data.data)
+        driver: Mappers.Driver(data?.data)
       };
     },
-    initialData,
-    enabled: !!telegram_id
-  });
 
-  return { ...args, ...data };
-};
+    onSuccess: () => {
+      notifications.show({
+        icon: <LuCheck />,
+        color: 'teal',
+        position: 'top-center',
+        title: 'Navbat muvaffaqiyatli qo‘shildi',
+        autoClose: 2000,
+        message: ''
+      });
+    },
+
+    onError: (error: any) => {
+      notifications.show({
+        icon: <LuCalendarX />,
+        color: 'orange',
+        position: 'top-center',
+        title: JSON.stringify(error?.request.response).search('no_tariff')
+          ? "Sizda aktiv tarif yo'q"
+          : 'Xatolik yuz berdi',
+        message: '',
+        autoClose: 3000
+      });
+    }
+  });
 
 export default useCreateRide;

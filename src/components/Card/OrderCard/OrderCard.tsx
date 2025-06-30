@@ -1,15 +1,10 @@
 import dayjs from 'dayjs';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import styles from './OrderCard.module.scss';
 import { Badge, Button, Flex } from '@mantine/core';
 
-type IProps = {
-  data: any;
-  mutation: (params: { id: number }) => void;
-};
-
-const OrderCard: React.FC<IProps> = ({ data, mutation }) => {
+const OrderCard = ({ data, mutation }: { data: any; mutation: (params: { id: number }) => void }) => {
   const [deletingId, setDeletingId] = useState<number | null>(null);
 
   const handleDeleteItem = (id: number) => {
@@ -55,6 +50,7 @@ const OrderCard: React.FC<IProps> = ({ data, mutation }) => {
           <strong>Haydo‘vchi:</strong> {'Biriktirilmagan'}
         </p>
       )}
+
       {data.relatedRide !== null && (
         <div className={styles.driverSection}>
           <p>
@@ -86,6 +82,7 @@ const OrderCard: React.FC<IProps> = ({ data, mutation }) => {
         >
           Haydo‘vchi bilan bog‘lanish
         </Button> */}
+
         <Button
           h={42}
           mt="lg"

@@ -1,3 +1,6 @@
+import * as RoutesType from '@/modules/routes/types';
+import * as OrderType from '@/modules/order/types';
+
 export declare namespace IApi {
   export namespace Single {
     export interface Response {
@@ -7,43 +10,23 @@ export declare namespace IApi {
 }
 
 export declare namespace IEntity {
-  export interface Order {
-    telegram_id: string;
-    route: number;
-    is_delivery: boolean;
-    ride_price: string | null;
-    cashback_used_percent: number | null;
-    front_seat: boolean;
-    extra_luggage: string | null;
-    is_cashback_used: boolean;
-    car_type: 'Standart' | 'Comfort' | 'Biznes';
-    date_of_departure: string;
-    payment_type: 'Cash' | 'Card';
-  }
-
-  interface Route {
-    id: number;
-    start: {
-      id: number;
-      name: string;
-    };
-    finish: {
-      id: number;
-      name: string;
-    };
+  interface TariffBuying {
+    driver: string;
+    selectedTariff: string;
+    tariffPaymentScreenshot: string;
   }
 
   interface MyOrders {
     id: string;
-    route: Route;
-    created_at: string;
-    updated_at: boolean;
-    ride_price: string | null;
-    front_seat: boolean;
-    extra_luggage: string | null;
-    date_of_departure: string;
-    car_type: 'Standart' | 'Comfort' | 'Biznes';
-    payment_type: 'Cash' | 'Card';
+    route: RoutesType.IEntity.Routes;
+    createdAt: string;
+    updatedAt: boolean;
+    ridePrice: string | null;
+    frontSeat: boolean;
+    extraLuggage: string | null;
+    dateOfDeparture: string;
+    carType: 'Standart' | 'Comfort' | 'Biznes';
+    paymentType: 'Cash' | 'Card';
   }
 
   export interface User {
@@ -108,8 +91,8 @@ export declare namespace IEntity {
     createdAt: string;
     updatedAt: string;
     isCompleted: boolean;
-    driver: Driver;
-    route: Route;
+    driver: OrderType.IEntity.IDriver;
+    route: RoutesType.IEntity.Routes;
     bookings: Bookings[];
   }
 
@@ -118,8 +101,8 @@ export declare namespace IEntity {
     carNumber: string;
     isActive: boolean;
     carModelName: string;
-    currentTariff: CurrentTariff;
-    recentRides: RecentRide[];
+    currentTariff: CurrentTariff | null;
+    recentRides: RecentRide[] | [];
   }
 
   export interface Tariff {
@@ -140,25 +123,19 @@ export declare namespace IQuery {
   }
 
   export interface Single {
-    item: IEntity.Driver;
+    driver: IEntity.Driver;
   }
 
   export interface Delete {
-    id: number;
+    rideId: number;
   }
 }
 
 export declare namespace IForm {
   export interface Create {
-    telegram_id: string;
-    is_delivery: boolean;
-    ride_price: string;
-    cashback_used_percent: number;
-    front_seat: boolean;
-    extra_luggage: string;
-    is_cashback_used: boolean;
-    car_type: 'Standart' | 'Comfort' | 'Biznes';
-    date_of_departure: string;
-    payment_type: 'Cash' | 'Card';
+    driver: string;
+    selectedTariff: string;
+    tariffPaymentScreenshot: File;
   }
+  export interface Update {}
 }

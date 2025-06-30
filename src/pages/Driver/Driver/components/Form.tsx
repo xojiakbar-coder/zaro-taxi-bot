@@ -1,105 +1,49 @@
-import classes from '../Driver.module.scss';
-import React, { useEffect, useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Input, Select, Text, Group, FileButton } from '@mantine/core';
+import { Text } from '@mantine/core';
+import styles from '../Driver.module.scss';
 
-import { Button } from '@/components/Button';
+import * as Fields from '@/containers/Fields';
+import { useList } from '@/modules/tariff/hooks';
+
 import { useDriver } from '@/modules/driver/hooks';
+import { Spacer } from '@/components/Spacer/Spacer';
 import SpinnerLoader from '@/components/Loader/Spinner';
-import { driverTariffSchema } from '@/common/services/formSchema';
-import { useTariffsList } from '@/modules/driver/hooks/useTariffList';
-import { useTariffFrom, type FormValues } from '@/modules/driver/hooks/useTariffForm';
 
-const Form: React.FC = () => {
-  const { item } = useDriver();
-  const { data: tariffList, loading: tariffsLoading, success } = useTariffsList();
-  const { fetchData: submitTariff, loading, error, success: submitSuccess } = useTariffFrom();
-  const [fileName, setFileName] = useState<string | null>(null);
+const Form = () => {
+  const { driver } = useDriver();
+  const { items, isLoading, isSuccess } = useList();
 
-  const {
-    handleSubmit,
-    control,
-    setValue,
-    formState: { errors }
-  } = useForm<FormValues>({
-    resolver: yupResolver(driverTariffSchema),
-    defaultValues: {
-      driver: '',
-      selected_tariff: '',
-      tariff_payment_screenshot: undefined as any
-    }
-  });
-
-  useEffect(() => {
-    if (item?.id) {
-      setValue('driver', `${item.id}`);
-    }
-  }, [item, setValue]);
-
-  const tariffOptions =
-    tariffList?.map(tariff => ({
-      label: tariff.name,
-      value: String(tariff.id)
-    })) || [];
-
-  const onSubmit = (data: FormValues) => {
-    submitTariff(data);
-  };
-
-  if (tariffsLoading && !success) return <SpinnerLoader />;
+  if (isLoading && !isSuccess) return <SpinnerLoader />;
 
   return (
-    <div className={classes.container}>
-      <form onSubmit={handleSubmit(onSubmit)} className={classes.formWrapper}>
-        <Text size="lg" fw={600} mb="md">
-          Tarif almashtirish
-        </Text>
+    <>
+      <Text className={styles.form_title}>Tarif {driver.currentTariff != null ? 'almashtirish' : 'sotib olish'}</Text>
 
-        <Input.Wrapper label="Tarif turi" error={errors.selected_tariff?.message}>
-          <Controller
-            name="selected_tariff"
-            control={control}
-            render={({ field }) => (
-              <Select placeholder="Tanlang" data={tariffOptions} disabled={!tariffOptions} {...field} />
-            )}
-          />
-        </Input.Wrapper>
+      <Spacer size="lg" />
 
-        <Input.Wrapper label="To'lov skrinshoti" error={errors.tariff_payment_screenshot?.message}>
-          <Group>
-            <FileButton
-              disabled={!tariffOptions}
-              accept="image/png,image/jpeg"
-              onChange={file => {
-                if (file) {
-                  setFileName(file.name);
-                  setValue('tariff_payment_screenshot', file, { shouldValidate: true });
-                }
-              }}
-            >
-              {props => <Button {...props}>Screenshot yuklash</Button>}
-            </FileButton>
-          </Group>
-          {fileName && <Text size="sm">Tanlangan fayl: {fileName}</Text>}
-        </Input.Wrapper>
+      <Fields.Select
+        name="selectedTariff"
+        label="Tarif tanlang"
+        className={styles.fields}
+        placeholder="Tarif tanlanlash"
+        data={items.map(tariff => ({
+          value: String(tariff.id),
+          label: tariff.name
+        }))}
+      />
 
-        {error && (
-          <Text c="red" mt="sm">
-            {error}
-          </Text>
-        )}
-        {submitSuccess && (
-          <Text c="green" mt="sm">
-            Yuborildi!
-          </Text>
-        )}
+      <Spacer size="md" />
 
-        <Button type="submit" variant="filled" justify="center" mt="lg" loading={loading} disabled={!item?.id}>
-          Yuborish
-        </Button>
-      </form>
-    </div>
+      <Fields.File
+        clearable
+        className={styles.fields}
+        accept="image/png,image/jpeg"
+        name="tariffPaymentScreenshot"
+        label="To'lov skrinshotini yuklang"
+        placeholder="To'lov skrinshotni yuklash"
+      />
+
+      <Spacer size="xl" />
+    </>
   );
 };
 

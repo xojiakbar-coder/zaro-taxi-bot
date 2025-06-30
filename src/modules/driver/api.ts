@@ -10,8 +10,37 @@ export const Driver = (id: string): AxiosPromise<Types.IApi.Single.Response> =>
   });
 
 // Create ride
-export const CreateRide = ({ id, rideId }: { id: string; rideId: number }): AxiosPromise<Types.IApi.Single.Response> =>
+export const CreateRide = ({
+  driverId,
+  routeId
+}: {
+  driverId: string;
+  routeId: number;
+}): AxiosPromise<Types.IApi.Single.Response> =>
+  http.request.post('/driver/create-ride/', {
+    driver: driverId,
+    route: routeId
+  });
+
+// Delete ride
+export const DeleteRide = ({
+  telegramId,
+  rideId
+}: {
+  telegramId: string;
+  rideId: number;
+}): AxiosPromise<Types.IApi.Single.Response> =>
   http.request.post('/driver/delete-ride/', {
-    telegram_id: id,
+    telegram_id: telegramId,
     ride_id: rideId
   });
+
+// Tarif create
+export const TariffCreate = ({ values }: { values: Types.IForm.Create }): AxiosPromise<Types.IApi.Single.Response> => {
+  const formData = new FormData();
+  formData.append('driver', values.driver);
+  formData.append('selected_tariff', values.selectedTariff);
+  formData.append('tariff_payment_screenshot', values.tariffPaymentScreenshot);
+
+  return http.request.post('/tariffs/driver-tariff/create/', formData);
+};

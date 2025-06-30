@@ -27,7 +27,7 @@ const Create = () => {
           return (
             <>
               <Form />
-              <Button type="submit" variant="filled" height={50} disabled={isLoading} className={styles.submitButton}>
+              <Button type="submit" variant="filled" height={46} disabled={isLoading} className={styles.submitButton}>
                 {isLoading ? 'Yuborilmoqda...' : 'Buyurtma berish'}
               </Button>
             </>

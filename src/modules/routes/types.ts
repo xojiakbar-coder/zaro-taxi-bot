@@ -7,7 +7,7 @@ export declare namespace IApi {
 }
 
 export declare namespace IEntity {
-  interface Location {
+  export interface Location {
     id: number;
     name: string;
   }
@@ -16,6 +16,11 @@ export declare namespace IEntity {
     id: number;
     start: Location;
     finish: Location;
+  }
+
+  export interface RoutesCardProps extends Routes {
+    className?: string;
+    onClick: () => void;
   }
 }
 

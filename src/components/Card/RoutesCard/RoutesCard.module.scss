@@ -1,14 +1,13 @@
-.routesCard {
+.routes_card {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  padding: 12px 24px;
+  padding: 10px 24px;
   border-radius: 16px;
   background-color: #ffffff;
   color: #000;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease;
 
   &:hover {
@@ -21,26 +20,26 @@
   }
 }
 
-.startLocation,
-.finishLocation {
+.start_location,
+.finish_location {
   display: flex;
   flex-direction: column;
   gap: 4px;
 
   span:first-child {
     color: #000;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
   }
 
   span:last-child {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     word-break: break-word;
   }
 }
 
-.startLocation {
+.start_location {
   text-align: left;
   width: 100%;
   margin-top: 8px;
@@ -51,7 +50,7 @@
   }
 }
 
-.finishLocation {
+.finish_location {
   text-align: right;
   width: 100%;
 

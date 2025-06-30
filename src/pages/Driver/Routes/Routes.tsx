@@ -1,57 +1,44 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRoutes } from '@/modules/routes/hooks';
 import { Button } from '@/components/Button';
-import { Notification } from '@mantine/core';
-import { LuBadgeInfo } from 'react-icons/lu';
+import { LuBadgeInfo, LuNavigation2 } from 'react-icons/lu';
 import EmptyPage from '@/components/EmptyPage';
 import styles from './Routes.module.scss';
-import RoutesCard from '@/components/Card/RoutesCard/RoutesCard';
 import SpinnerLoader from '@/components/Loader/Spinner';
-import { useRide } from '@/modules/driver/hooks/useRide';
-import { useDriver } from '@/modules/driver/hooks';
-import { useStoredUser } from '@/modules/order/hooks';
+import RoutesCard from '@/components/Card/RoutesCard/RoutesCard';
+import { useCreateRide, useDriver } from '@/modules/driver/hooks';
+import { useNavigate } from 'react-router-dom';
 
 const DriverRoutes = () => {
-  const user = useStoredUser();
-  const { item } = useDriver();
-  const { data, fetchData, error } = useRide();
-  const [rideError, setRideError] = useState(error);
+  const navigate = useNavigate();
+  const { mutate } = useCreateRide();
+  const { driver, isFetched } = useDriver();
   const [selectedItem, setSelectItem] = useState<number | null>(null);
-  const { routes, isLoading, isSuccess } = useRoutes();
-  const activeOrder = item?.recentRides[0];
-
-  useEffect(() => {
-    if (error) {
-      setSelectItem(null);
-      setRideError(error);
-    }
-  }, [user, error]);
+  const { routes, isLoading, isSuccess: isRoutesSuccess } = useRoutes();
 
   const onSubmit = () => {
-    if (item?.id && selectedItem !== null) fetchData(item.id.toString(), routes[selectedItem].id);
+    if (driver?.id && selectedItem !== null) {
+      mutate({ driverId: driver.id.toString(), routeId: routes[selectedItem].id });
+      navigate('/driver/my-orders');
+    }
   };
 
-  if (activeOrder && isSuccess) {
+  if (driver?.recentRides[0] && isRoutesSuccess) {
     return <EmptyPage icon={LuBadgeInfo} title="Siz allaqachon aktiv navbat bor" />;
   }
 
-  if (isLoading) return <SpinnerLoader />;
-
-  const successMessage =
-    selectedItem !== null && routes[selectedItem]
-      ? `${routes[selectedItem].start.name} - ${routes[selectedItem].finish.name}`
-      : 'Hozircha tanlanmagan';
+  if (isLoading && isFetched) return <SpinnerLoader />;
 
   return (
     <div className={styles.container}>
       <div className={styles.title}>Yo‘nalishlar tanlang</div>
-      <div className={styles.cardWrapper}>
+      <div className={styles.card_wrapper}>
         {routes.map((item, index) => (
           <div key={item.id}>
             <RoutesCard
               id={item.id}
-              start={item.start.name}
-              finish={item.finish.name}
+              start={item.start}
+              finish={item.finish}
               onClick={() => setSelectItem(index)}
               className={selectedItem !== null && routes[selectedItem].id === item.id ? styles.selected : ''}
             />
@@ -60,49 +47,36 @@ const DriverRoutes = () => {
       </div>
 
       {routes.length > 0 && (
-        <div className={styles.selectedTextWrapper}>
-          <div className={styles.selectedText}>{`Tanlangan yo‘nalish: ${successMessage}`}</div>
+        <div className={styles.selected_text_wrapper}>
+          <div
+            className={`${styles.selected_location} ${
+              selectedItem !== null && routes[selectedItem] && styles.selected_location_active
+            }`}
+          >
+            <LuNavigation2 />
+            <b className={styles.selected_location_label}>Yo‘nalish:</b>
+            {selectedItem !== null && routes[selectedItem]
+              ? `${routes[selectedItem].start.name} - ${routes[selectedItem].finish.name}`
+              : 'Tanlanmagan'}
+          </div>
+
           <Button
-            height={45}
-            className={styles.removeBtn}
+            height={40}
+            w="max-content"
+            className={styles.remove_btn}
             disabled={selectedItem == null}
             onClick={() => setSelectItem(null)}
+            variant="gradient"
+            gradient={{ from: 'red', to: 'pink', deg: 90 }}
           >
-            Yo‘nalishni olib tashlash
+            Olib tashlash
           </Button>
         </div>
       )}
 
-      {rideError && (
-        <Notification
-          mt="lg"
-          color="red"
-          variant="error"
-          withCloseButton
-          title="Sizda aktiv tarif yo‘q — navbatga turish uchun avval aktiv tarif sotib oling."
-        />
-      )}
-
-      {data && !error && (
-        <Notification
-          mt="md"
-          color="green"
-          variant="success"
-          withCloseButton={false}
-          title={'Navbat muvaffaqiyatli qo‘shildi'}
-        />
-      )}
-
       {routes.length > 0 && (
-        <Button
-          type="button"
-          variant="gradient"
-          onClick={onSubmit}
-          height={50}
-          disabled={selectedItem === null}
-          className={styles.button}
-        >
-          Yuborish
+        <Button height={46} type="button" onClick={onSubmit} className={styles.button} disabled={selectedItem === null}>
+          Navbatga Qo‘shish
         </Button>
       )}
     </div>

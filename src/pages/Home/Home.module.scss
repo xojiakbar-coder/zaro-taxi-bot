@@ -17,7 +17,7 @@
   }
 }
 
-.cardWrapper {
+.card_wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
@@ -27,5 +27,6 @@
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
+    gap: 8px;
   }
 }

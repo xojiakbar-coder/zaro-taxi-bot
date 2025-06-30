@@ -23,13 +23,13 @@ const Home = () => {
   return (
     <div className={styles.container}>
       <div className={styles.title}>Yo'nalishlar tanlang</div>
-      <div className={styles.cardWrapper}>
+      <div className={styles.card_wrapper}>
         {routes?.map(item => (
           <Card
             id={item.id}
             key={item.id}
-            start={item.start.name}
-            finish={item.finish.name}
+            start={item.start}
+            finish={item.finish}
             onClick={() => handleCardClick(item.id)}
           />
         ))}
