@@ -33,7 +33,7 @@ const Profile = () => {
         className={styles.cashbackShare}
         href={`https://t.me/share/url?url=https://t.me/pitakuzrobot?start=${data?.item?.promoCode}&text=Link ustiga bosing va mening promokodim orqali cashback oling`}
       >
-        <Button variant="filled" h={46}>
+        <Button variant="filled" className={styles.shareButton} h={44}>
           Do'stga promokod ulashish
         </Button>
       </a>

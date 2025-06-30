@@ -5,6 +5,7 @@ import Button from '@/components/Button/Button';
 
 import { LuPhoneCall, LuPlus } from 'react-icons/lu';
 
+import EmptyPage from '@/components/EmptyPage';
 import SpinnerLoader from '@/components/Loader/Spinner';
 import useDriver from '@/modules/driver/hooks/useDriver';
 
@@ -14,7 +15,18 @@ import { DrvierDataCard } from '@/components/Card/DriverDataCard';
 const Driver = () => {
   const user = useUser();
   const navigate = useNavigate();
-  const { driver, isLoading } = useDriver();
+  const { driver, isLoading, isFetched } = useDriver();
+
+  if (driver.carModelName == '' && driver.carModelName == '' && isFetched) {
+    return (
+      <EmptyPage
+        title="Sizning ma'lumotlaringiz topilmadi"
+        buttonContent="Biz bilan bog'lanish"
+        externalLink="https://t.me/murodov_azizmurod"
+        subtitle="Bu holat uchun biz bilan bog'lanishingiz mumkin."
+      />
+    );
+  }
 
   if (isLoading) return <SpinnerLoader />;
 
@@ -35,15 +47,16 @@ const Driver = () => {
 
         <div className={styles.actions}>
           <Button
-            h={46}
+            h={44}
             className={styles.button}
             leftSection={<LuPhoneCall size={16} />}
             gradient={{ from: 'indigo', to: 'blue', deg: 90 }}
           >
             Bog‘lanish
           </Button>
+
           <Button
-            h={46}
+            h={44}
             className={styles.button}
             leftSection={<LuPlus size={20} />}
             onClick={() => navigate('/driver/change-tariff')}
