@@ -27,7 +27,7 @@ interface IProps {
 }
 
 const Create: React.FC<IProps> = ({ children, onError, onSettled, onSuccess, className }) => {
-  const telegram_id = useStoredUser()?.telegram_id;
+  const telegram_id = useStoredUser()?.id;
   const { id } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();

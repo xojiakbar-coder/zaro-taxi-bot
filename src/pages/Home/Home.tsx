@@ -1,22 +1,24 @@
-import { useEffect } from 'react';
 import styles from './Home.module.scss';
+
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '@/modules/order/hooks';
 import { useRoutes } from '@/modules/routes/hooks';
+
 import SpinnerLoader from '../../components/Loader/Spinner';
 import Card from '../../components/Card/RoutesCard/RoutesCard';
+import { useUser } from '@/modules/order/hooks';
+import { useEffect } from 'react';
 
 const Home = () => {
-  const navigate = useNavigate();
   const user = useUser();
+  const navigate = useNavigate();
   const { routes, isLoading } = useRoutes();
-
-  useEffect(() => {}, [user]);
 
   const handleCardClick = (id: number) => {
     navigate(`/orders/${id}`);
     if (id) localStorage.setItem('routeId', id.toString());
   };
+
+  useEffect(() => {}, [user]);
 
   if (isLoading) return <SpinnerLoader />;
 

@@ -7,7 +7,7 @@ import * as Mappers from '../mappers';
 import { useEffect } from 'react';
 
 const useDriver = () => {
-  const telegram_id = useStoredUser()?.telegram_id;
+  const telegram_id = useStoredUser()?.id;
 
   const initialData = { driver: Mappers.Driver() } as Types.IQuery.Single;
 

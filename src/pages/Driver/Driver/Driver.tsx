@@ -11,11 +11,14 @@ import useDriver from '@/modules/driver/hooks/useDriver';
 
 import { useUser } from '@/modules/order/hooks';
 import { DrvierDataCard } from '@/components/Card/DriverDataCard';
+import { useEffect } from 'react';
 
 const Driver = () => {
   const user = useUser();
   const navigate = useNavigate();
   const { driver, isLoading, isFetched } = useDriver();
+
+  useEffect(() => {}, [user]);
 
   if (driver.carModelName == '' && driver.carModelName == '' && isFetched) {
     return (

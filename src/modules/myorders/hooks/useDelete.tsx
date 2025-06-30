@@ -6,7 +6,7 @@ import * as Types from '../types.ts';
 import * as Mappers from '../mappers.ts';
 
 const useDelete = () => {
-  const telegramId = useStoredUser()?.telegram_id || '';
+  const telegramId = useStoredUser()?.id || '';
   const queryClient = useQueryClient();
 
   return useMutation({

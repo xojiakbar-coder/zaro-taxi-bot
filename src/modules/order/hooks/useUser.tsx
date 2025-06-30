@@ -29,6 +29,7 @@ const useUser = (): Types.IEntity.User | null => {
       if (userRaw) {
         const userJson = decodeURIComponent(userRaw);
         const parsedUser = JSON.parse(userJson) as Types.IEntity.User;
+        window.alert(`${parsedUser} $${userJson}`);
 
         localStorage.setItem('telegramUser', JSON.stringify(parsedUser));
         setUser(parsedUser);

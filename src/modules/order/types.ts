@@ -50,7 +50,7 @@ export declare namespace IEntity {
   }
 
   export interface User {
-    telegram_id: string;
+    id: string;
     first_name?: string;
     last_name?: string;
     username?: string;

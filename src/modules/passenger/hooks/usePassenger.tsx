@@ -6,7 +6,7 @@ import * as Types from '../types';
 import * as Mappers from '../mappers';
 
 const usePassenger = () => {
-  const telegram_id = useStoredUser()?.telegram_id;
+  const telegram_id = useStoredUser()?.id;
 
   const initialData: Types.IQuery.Single = { item: Mappers.Passenger() };
 

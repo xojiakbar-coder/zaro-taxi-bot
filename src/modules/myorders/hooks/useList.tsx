@@ -10,7 +10,7 @@ interface IProps {
 }
 
 const useList = ({ enabled = true }: IProps = {}) => {
-  const telegram_id = useStoredUser()?.telegram_id;
+  const telegram_id = useStoredUser()?.id;
 
   const initialData = { items: [] } as Types.IQuery.List;
 
