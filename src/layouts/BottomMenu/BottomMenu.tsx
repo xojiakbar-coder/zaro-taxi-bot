@@ -37,7 +37,7 @@ export const BottomMenu = () => {
         const isActive = activePaths.includes(location.pathname);
 
         return (
-          <NavLink key={value} to={value} className={`${styles.navLink} ${isActive ? styles.active : ''}`}>
+          <NavLink key={value} to={value} className={`${styles.nav_link} ${isActive ? styles.active : ''}`}>
             <Icon className={styles.icon} />
             <span className={styles.label}>{label}</span>
           </NavLink>
