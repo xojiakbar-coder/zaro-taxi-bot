@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Image, Radio, Text } from '@mantine/core';
 
 import comfortCar from '@/assets/images/comfort-car.webp';
@@ -7,9 +7,7 @@ import bussinessCar from '@/assets/images/bussiness-car.webp';
 
 import styles from './CarTypeCard.module.scss';
 
-interface IProps {}
-
-const PaymentCard: React.FC<IProps> = () => {
+const PaymentCard = () => {
   const [value, setValue] = useState<string | null>(null);
 
   return (

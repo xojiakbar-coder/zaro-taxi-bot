@@ -15,14 +15,7 @@ export function Time<T extends FieldValues>({ control, name, rules, defaultValue
     defaultValue
   });
 
-  return (
-    <MantineTimeInput
-      {...rest}
-      {...field}
-      error={error?.message}
-      value={field.value === undefined || field.value === null ? '' : field.value}
-    />
-  );
+  return <MantineTimeInput {...rest} {...field} error={error?.message} />;
 }
 
 export default Time;

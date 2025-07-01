@@ -51,12 +51,12 @@ export declare namespace IEntity {
 
   export interface User {
     id: string;
-    first_name?: string;
-    last_name?: string;
-    username?: string;
+    first_name: string;
+    last_name: string;
+    username: string;
     language_code?: string;
     allows_write_to_pm?: boolean;
-    photo_url?: string;
+    photo_url: string;
   }
 }
 
@@ -86,6 +86,7 @@ export declare namespace IForm {
     isCashbackUsed?: boolean;
     carType: 'Standart' | 'Comfort' | 'Biznes';
     dateOfDeparture: string;
+    timeOfDeparture: string;
     paymentType: 'Cash' | 'Card';
   }
 

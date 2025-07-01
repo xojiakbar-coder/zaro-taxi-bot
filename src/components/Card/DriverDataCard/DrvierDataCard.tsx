@@ -1,16 +1,12 @@
 import dayjs from 'dayjs';
-import React from 'react';
 import CarData from './CarData';
+import * as Types from '@/modules/driver/types';
 import { Badge, Box, Flex, Group, Stack, Text } from '@mantine/core';
 
 import { LuCalendarCheck } from 'react-icons/lu';
 import styles from './DrvierDataCard.module.scss';
 
-type DataCardProps = {
-  data: any;
-};
-
-const DrvierDataCard: React.FC<DataCardProps> = ({ data }) => {
+const DrvierDataCard = ({ data }: { data: Types.IEntity.Driver }) => {
   return (
     <div className={styles.outer_container}>
       {data.currentTariff !== null && (

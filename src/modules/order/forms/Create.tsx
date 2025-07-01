@@ -11,6 +11,7 @@ import * as yup from 'yup';
 import * as Api from '../api';
 import * as Types from '../types';
 import * as Mappers from '../mappers';
+import dayjs from 'dayjs';
 
 interface FormValues extends Types.IForm.Create {}
 
@@ -61,7 +62,16 @@ const Create: React.FC<IProps> = ({ children, onError, onSettled, onSuccess, cla
       .string()
       .oneOf(['Standart', 'Comfort', 'Biznes'], 'Noto‘g‘ri mashina turi')
       .required('Majburiy maydon'),
-    dateOfDeparture: yup.string().required('Majburiy maydon'),
+    dateOfDeparture: yup
+      .string()
+      .required('Majburiy maydon')
+      .test('is-future-or-today', 'Xato vaqt', value => {
+        if (!value) return false;
+        const today = dayjs().startOf('day');
+        const inputDate = dayjs(value).startOf('day');
+        return inputDate.isSame(today) || inputDate.isAfter(today);
+      }),
+    timeOfDeparture: yup.string().required('Majburiy maydon'),
     paymentType: yup.string().oneOf(['Cash', 'Card'], 'Noto‘g‘ri to‘lov turi').required('Majburiy maydon')
   });
 
@@ -77,6 +87,7 @@ const Create: React.FC<IProps> = ({ children, onError, onSettled, onSuccess, cla
       isCashbackUsed: false,
       carType: undefined,
       dateOfDeparture: '',
+      timeOfDeparture: '',
       paymentType: undefined
     },
     resolver: yupResolver<FormValues, any, FormValues>(validationSchema)

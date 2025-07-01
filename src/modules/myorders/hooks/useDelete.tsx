@@ -17,7 +17,7 @@ const useDelete = () => {
     onSuccess: () => {
       setTimeout(() => {
         queryClient.invalidateQueries({
-          queryKey: ['myOrders', 'single'],
+          queryKey: ['myOrders', 'list'],
           exact: true
         });
       }, 1000);

@@ -31,7 +31,7 @@ const Driver = () => {
     );
   }
 
-  if (isLoading) return <SpinnerLoader />;
+  if (isLoading && !isFetched) return <SpinnerLoader />;
 
   return (
     <div className={styles.wrapper}>
@@ -46,7 +46,7 @@ const Driver = () => {
           <h2 className={styles.name}>{user?.first_name}</h2>
         </div>
 
-        <DrvierDataCard data={driver} />
+        {isFetched && <DrvierDataCard data={driver} />}
 
         <div className={styles.actions}>
           <Button

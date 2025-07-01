@@ -1,15 +1,11 @@
-import React from 'react';
+import styles from './DataCard.module.scss';
+import * as Types from '@/modules/passenger/types';
+
+import { FaMoneyBill, FaTag } from 'react-icons/fa';
+import { LuCheck, LuCopy, LuPercent, LuPhone } from 'react-icons/lu';
 import { ActionIcon, Box, CopyButton, Flex, Stack, Text } from '@mantine/core';
 
-import styles from './DataCard.module.scss';
-import { LuCheck, LuCopy, LuPercent, LuPhone } from 'react-icons/lu';
-import { FaMoneyBill, FaTag } from 'react-icons/fa';
-
-type DataCardProps = {
-  data: any;
-};
-
-const DataCard: React.FC<DataCardProps> = ({ data }) => {
+const DataCard = ({ data }: { data: Types.IEntity.Passenger }) => {
   return (
     <div className={styles.outer_container}>
       <div className={styles.card}>

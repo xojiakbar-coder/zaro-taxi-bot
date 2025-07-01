@@ -5,11 +5,12 @@ import { notifications } from '@mantine/notifications';
 
 import { Button } from '@/components/Button';
 import CreateForm from '@/modules/order/forms/Create';
+import Title from '@/components/PageTitle/Title';
 
 const Create = () => {
   return (
     <div className={styles.container}>
-      <div className={styles.title}>Buyurtma berish</div>
+      <Title>Buyurtma berish</Title>
       <CreateForm
         onSuccess={() => {
           notifications.show({
@@ -27,7 +28,7 @@ const Create = () => {
           return (
             <>
               <Form />
-              <Button type="submit" variant="filled" height={46} disabled={isLoading} className={styles.submitButton}>
+              <Button type="submit" variant="filled" height={46} disabled={isLoading} className={styles.submit_button}>
                 {isLoading ? 'Yuborilmoqda...' : 'Buyurtma berish'}
               </Button>
             </>

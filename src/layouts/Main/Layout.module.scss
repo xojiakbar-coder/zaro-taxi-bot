@@ -1,18 +1,12 @@
 .layout {
-  min-height: 100dvh;
-  height: max-content;
+  height: 100dvh;
+  min-height: 100vh;
+  max-height: 100vh;
 }
 
 .content {
   width: 100%;
-  height: max-content;
-  min-height: calc(100dvh - 80px);
-
-  @media (max-width: 768px) {
-    padding: 0 10px;
-  }
-
-  @media (max-width: 600px) {
-    padding: 0 6px;
-  }
+  overflow-y: auto;
+  min-height: var(--max-height);
+  max-height: var(--max-height);
 }

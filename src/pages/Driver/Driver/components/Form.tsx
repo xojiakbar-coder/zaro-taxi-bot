@@ -7,6 +7,7 @@ import { useList } from '@/modules/tariff/hooks';
 import { useDriver } from '@/modules/driver/hooks';
 import { Spacer } from '@/components/Spacer/Spacer';
 import SpinnerLoader from '@/components/Loader/Spinner';
+import CardNumberCopy from '@/components/CopyButton/CardNumberCopy';
 
 const Form = () => {
   const { driver } = useDriver();
@@ -17,6 +18,13 @@ const Form = () => {
   return (
     <>
       <Text className={styles.form_title}>Tarif {driver.currentTariff != null ? 'almashtirish' : 'sotib olish'}</Text>
+
+      <Spacer size="lg" />
+
+      <CardNumberCopy
+        cardNumber="9860 1766 1378 8965"
+        description="Tarif to'lovini ushbu kartaga o'tkazishingiz mumkin"
+      />
 
       <Spacer size="lg" />
 

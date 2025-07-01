@@ -9,19 +9,22 @@ import { CarTypeCard } from '@/components/Card/CarTypeCard';
 const Form = () => {
   return (
     <>
-      <Fields.Text
-        name="extraLuggage"
-        label="Qo‘shimcha yuk"
-        className={styles.formInput}
-        placeholder="Qo‘shimcha yuk haqida yozing"
+      <Fields.Text name="extraLuggage" label="Qo‘shimcha yuk" placeholder="Qo‘shimcha yuk haqida yozing" />
+
+      <Spacer />
+
+      <Fields.DateInput
+        name="dateOfDeparture"
+        label="Jo‘nash sanasi belgilang:"
+        placeholder="Jo‘nash sana va vaqtini tanlang"
       />
 
       <Spacer />
 
-      <Fields.DateTimePicker
-        name="dateOfDeparture"
-        className={styles.formInput}
-        label="Jo‘nash sanasi va vaqtini:"
+      <Fields.TimeInput
+        name="timeOfDeparture"
+        className={styles.form_input}
+        label="Jo‘nash vaqtini belgilang:"
         placeholder="Jo‘nash sana va vaqtini tanlang"
       />
 
@@ -39,7 +42,7 @@ const Form = () => {
 
       <Spacer />
 
-      <div className={styles.rowWrapper}>
+      <div className={styles.row_wrapper}>
         <Fields.Chip name="isCashbackUsed" color="rgb(13, 49, 255)">
           Keshbekni ishlatish
         </Fields.Chip>

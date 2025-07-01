@@ -3,12 +3,7 @@ import { Box, Flex, Group, Stack, Text } from '@mantine/core';
 
 import styles from './DrvierDataCard.module.scss';
 
-type IProps = {
-  carNumber: string;
-  carModelName: string;
-};
-
-const CarData = ({ carNumber, carModelName }: IProps) => {
+const CarData = ({ carNumber, carModelName }: { carNumber: string; carModelName: string }) => {
   return (
     <div className={styles.card}>
       <Stack gap={8}>

@@ -14,6 +14,6 @@ export const Create = ({ values }: { values: Types.IForm.Create }): AxiosPromise
     is_cashback_used: values.isCashbackUsed,
     cashback_used_percent: values.cashbackUsedPercent,
     payment_type: values.paymentType,
-    date_of_departure: values.dateOfDeparture,
+    date_of_departure: `${values.dateOfDeparture} ${values.timeOfDeparture}`,
     car_type: values.carType
   });

@@ -1,14 +1,13 @@
 .container {
   display: flex;
   width: 100%;
+  height: 100%;
   padding: 30px 24px;
-  height: max-content;
   flex-direction: column;
   gap: 24px;
-  min-height: var(--max-height);
 
   @media (max-width: 768px) {
-    padding: 20px 4px;
+    padding: 20px 8px;
   }
 }
 
@@ -29,21 +28,21 @@
   height: 100%;
   gap: 30px;
 
-  &Checkbox {
+  &__checkbox {
     color: #fff !important;
     border: none !important;
   }
 
-  &Input {
+  &__input {
     border: none !important;
   }
 
-  &Radio {
+  &__radio {
     color: #fff !important;
     border: none !important;
   }
 
-  &DatePicker {
+  &__date_picker {
     width: 100%;
     color: #000 !important;
     height: 35px !important;
@@ -54,14 +53,25 @@
   }
 }
 
-.rowWrapper {
+.row_wrapper {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: start;
   gap: 8px;
+  width: 100%;
 }
 
-.columnWrapper {
+.date_fields_wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.column_wrapper {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -82,7 +92,7 @@
   border: 1px solid #000;
 }
 
-.radioGroup {
+.radio_group {
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -90,12 +100,12 @@
   gap: 8px;
 }
 
-.submitButton {
+.submit_button {
   width: 100%;
   margin-top: 14px;
 }
 
-.dateFiledsWrapper {
+.date_fields_wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
@@ -106,7 +116,7 @@
   }
 }
 
-.carTypeWrapper {
+.car_type_wrapper {
   display: grid;
   grid-template-columns: 200px 200px 200px;
   grid-auto-rows: 180px;
@@ -133,7 +143,7 @@
   }
 }
 
-.radioRontent {
+.radio_content {
   display: flex;
   align-items: center;
 }
@@ -152,6 +162,12 @@
   font-size: var(--mantine-font-size-xs);
 }
 
-:global(.mantine-RadioGroup-error) {
-  margin-top: 5px;
+:global {
+  .mantine-DateInput-calendarHeader {
+    color: #000;
+  }
+
+  .mantine-RadioGroup-error {
+    margin-top: 5px;
+  }
 }

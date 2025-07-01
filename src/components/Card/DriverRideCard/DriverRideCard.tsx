@@ -1,10 +1,16 @@
-import dayjs from 'dayjs';
 import { useState } from 'react';
+import * as Types from '@/modules/driver/types';
 import styles from './DriverRideCard.module.scss';
 
 import { Badge, Button } from '@mantine/core';
 
-const DriverRideCard = ({ data, mutation }: { data: any; mutation: (params: { rideId: number }) => void }) => {
+const DriverRideCard = ({
+  data,
+  mutation
+}: {
+  data: Types.IEntity.RecentRide;
+  mutation: (params: { rideId: number }) => void;
+}) => {
   const [deletingId, setDeletingId] = useState<number | null>(null);
 
   const handleDeleteItem = (id: number) => {
@@ -24,10 +30,6 @@ const DriverRideCard = ({ data, mutation }: { data: any; mutation: (params: { ri
       </div>
       <p>
         <strong>Yaratilgan:</strong> {data.createdAt}
-      </p>
-      <p>
-        <strong>Jo'nash sanasi:</strong>{' '}
-        {`${dayjs(data.dateOfDeparture).format('YYYY-MM-DD')} - ${dayjs(data.dateOfDeparture).format('HH:mm:ss')}`}
       </p>
       <p>
         <strong>Jo‘nash manzili:</strong> {data.route.start.name}
