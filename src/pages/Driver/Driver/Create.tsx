@@ -29,7 +29,7 @@ const Create = () => {
               <>
                 <Form />
                 <Button type="submit" variant="filled" h={46} disabled={isLoading} className={styles.submit_button}>
-                  {isLoading ? 'Yuborilmoqda...' : 'Buyurtma berish'}
+                  {isLoading ? 'Yuborilmoqda...' : 'Yuborish'}
                 </Button>
               </>
             );

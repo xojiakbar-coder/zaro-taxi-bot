@@ -9,24 +9,11 @@ import { CarTypeCard } from '@/components/Card/CarTypeCard';
 const Form = () => {
   return (
     <>
-      <Fields.Text name="extraLuggage" label="Qo‘shimcha yuk" placeholder="Qo‘shimcha yuk haqida yozing" />
+      <Fields.DateTimePickerInput name="dateOfDeparture" label="Jo‘nash sanasi:" placeholder="Jo‘nash sana belgilang" />
 
       <Spacer />
 
-      <Fields.DateTimePickerInput
-        name="dateOfDeparture"
-        label="Jo‘nash sanasi belgilang:"
-        placeholder="Jo‘nash sana va vaqtini tanlang"
-      />
-
-      <Spacer />
-
-      <Fields.TimeInput
-        name="timeOfDeparture"
-        className={styles.form_input}
-        label="Jo‘nash vaqtini belgilang:"
-        placeholder="Jo‘nash sana va vaqtini tanlang"
-      />
+      <Fields.TimeInput name="timeOfDeparture" label="Jo‘nash vaqti:" placeholder="Jo‘nash vaqtini belgilang" />
 
       <Spacer />
 
@@ -39,6 +26,10 @@ const Form = () => {
       <Fields.RadioGroup name="paymentType" label="To‘lov turi:">
         <PaymentCard />
       </Fields.RadioGroup>
+
+      <Spacer />
+
+      <Fields.Text name="extraLuggage" label="Qo‘shimcha yuk" placeholder="Qo‘shimcha yuk haqida yozing" />
 
       <Spacer />
 

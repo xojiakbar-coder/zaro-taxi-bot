@@ -4,6 +4,7 @@ import { useDelete, useList } from '@/modules/myorders/hooks';
 import EmptyPage from '@/components/EmptyPage';
 import SpinnerLoader from '@/components/Loader/Spinner';
 import { OrderCard } from '@/components/Card/OrderCard';
+import Title from '@/components/PageTitle/Title';
 
 const MyOrders = () => {
   const { items, isLoading, isSuccess, isFetched } = useList();
@@ -16,7 +17,7 @@ const MyOrders = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>Buyurtmalaringiz ro'yxati</div>
+      <Title>Buyurtmalaringiz ro'yxati</Title>
       <div className={styles.myOrdersWrapper}>
         {isSuccess &&
           items.length > 0 &&

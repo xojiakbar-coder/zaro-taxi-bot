@@ -11,16 +11,6 @@
   }
 }
 
-.title {
-  font-size: 20px;
-  font-weight: 600;
-  text-align: center;
-
-  @media (min-width: 768px) {
-    font-size: 28px;
-  }
-}
-
 .form {
   display: flex;
   flex-direction: column;
@@ -163,7 +153,7 @@
 }
 
 :global {
-  .mantine-DateInput-calendarHeader {
+  .mantine-DatePickerInput-calendarHeader {
     color: #000;
   }
 

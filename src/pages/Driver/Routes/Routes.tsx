@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import { useRoutes } from '@/modules/routes/hooks';
-import { Button } from '@/components/Button';
-import { LuBadgeInfo, LuNavigation2 } from 'react-icons/lu';
-import EmptyPage from '@/components/EmptyPage';
 import styles from './Routes.module.scss';
-import SpinnerLoader from '@/components/Loader/Spinner';
-import RoutesCard from '@/components/Card/RoutesCard/RoutesCard';
-import { useCreateRide, useDriver } from '@/modules/driver/hooks';
 import { useNavigate } from 'react-router-dom';
+import { useRoutes } from '@/modules/routes/hooks';
+import { useCreateRide, useDriver } from '@/modules/driver/hooks';
+
+import { Button } from '@/components/Button';
+import EmptyPage from '@/components/EmptyPage';
+import Title from '@/components/PageTitle/Title';
+import SpinnerLoader from '@/components/Loader/Spinner';
+import { LuBadgeInfo, LuNavigation2 } from 'react-icons/lu';
+import RoutesCard from '@/components/Card/RoutesCard/RoutesCard';
 
 const DriverRoutes = () => {
   const navigate = useNavigate();
@@ -31,7 +33,7 @@ const DriverRoutes = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>Yo‘nalishlar tanlang</div>
+      <Title>Yo‘nalishlar tanlang</Title>
       <div className={styles.card_wrapper}>
         {routes.map((item, index) => (
           <div key={item.id}>

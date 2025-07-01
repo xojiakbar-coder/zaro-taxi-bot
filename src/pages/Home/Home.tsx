@@ -1,12 +1,13 @@
 import styles from './Home.module.scss';
 
+import { useEffect } from 'react';
+import { useUser } from '@/modules/order/hooks';
 import { useNavigate } from 'react-router-dom';
 import { useRoutes } from '@/modules/routes/hooks';
 
+import Title from '@/components/PageTitle/Title';
 import SpinnerLoader from '../../components/Loader/Spinner';
 import Card from '../../components/Card/RoutesCard/RoutesCard';
-import { useUser } from '@/modules/order/hooks';
-import { useEffect } from 'react';
 
 const Home = () => {
   const user = useUser();
@@ -24,7 +25,7 @@ const Home = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>Yo'nalishlar tanlang</div>
+      <Title>Yo'nalishlar tanlang</Title>
       <div className={styles.card_wrapper}>
         {routes?.map(item => (
           <Card

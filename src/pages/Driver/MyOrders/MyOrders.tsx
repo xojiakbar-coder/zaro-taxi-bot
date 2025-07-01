@@ -4,12 +4,16 @@ import { useDriver } from '@/modules/driver/hooks';
 import useDeleteRide from '@/modules/driver/hooks/useDelete';
 
 import EmptyPage from '@/components/EmptyPage';
+import Title from '@/components/PageTitle/Title';
 import SpinnerLoader from '@/components/Loader/Spinner';
 import DriverRideCard from '@/components/Card/DriverRideCard/DriverRideCard';
+import { useEffect } from 'react';
 
 const MyOrders = () => {
   const { mutate } = useDeleteRide();
   const { driver, isLoading, isFetched } = useDriver();
+
+  useEffect(() => {}, [driver.recentRides]);
 
   if (isFetched && driver.recentRides.length === 0) {
     return (
@@ -25,7 +29,7 @@ const MyOrders = () => {
 
   return (
     <div className={styles.myOrdersWrapper}>
-      <div className={styles.title}>Buyurtmalar ro'yxati</div>
+      <Title>Buyurtmalar ro'yxati</Title>
 
       <div className={styles.myOrdersWrapper}>
         {driver.recentRides[0] && <DriverRideCard data={driver.recentRides[0]} mutation={mutate} />}

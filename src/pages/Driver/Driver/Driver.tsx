@@ -1,17 +1,15 @@
-import { Avatar } from '@mantine/core';
+import { useEffect } from 'react';
 import styles from './Driver.module.scss';
 import { useNavigate } from 'react-router-dom';
-import Button from '@/components/Button/Button';
+import { useUser } from '@/modules/order/hooks';
 
-import { LuPhoneCall, LuPlus } from 'react-icons/lu';
-
+import { Avatar } from '@mantine/core';
 import EmptyPage from '@/components/EmptyPage';
+import Button from '@/components/Button/Button';
+import { LuPhoneCall, LuPlus } from 'react-icons/lu';
 import SpinnerLoader from '@/components/Loader/Spinner';
 import useDriver from '@/modules/driver/hooks/useDriver';
-
-import { useUser } from '@/modules/order/hooks';
 import { DrvierDataCard } from '@/components/Card/DriverDataCard';
-import { useEffect } from 'react';
 
 const Driver = () => {
   const user = useUser();
@@ -49,14 +47,16 @@ const Driver = () => {
         {isFetched && <DrvierDataCard data={driver} />}
 
         <div className={styles.actions}>
-          <Button
-            h={44}
-            className={styles.button}
-            leftSection={<LuPhoneCall size={16} />}
-            gradient={{ from: 'indigo', to: 'blue', deg: 90 }}
-          >
-            Bog‘lanish
-          </Button>
+          <a href="https://t.me/murodov_azizmurod" className={styles.contact_us}>
+            <Button
+              h={44}
+              className={styles.button}
+              leftSection={<LuPhoneCall size={16} />}
+              gradient={{ from: 'indigo', to: 'blue', deg: 90 }}
+            >
+              Bog‘lanish
+            </Button>
+          </a>
 
           <Button
             h={44}

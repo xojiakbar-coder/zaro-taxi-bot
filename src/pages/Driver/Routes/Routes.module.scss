@@ -1,23 +1,12 @@
 .container {
   width: 100%;
   padding: 30px 24px;
+  gap: 24px;
   height: max-content;
   min-height: var(--max-height);
 
   @media (max-width: 768px) {
     padding: 20px 8px;
-  }
-}
-
-.title {
-  color: white;
-  font-size: 26px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 36px;
-
-  @media (min-width: 768px) {
-    font-size: 24px;
   }
 }
 
