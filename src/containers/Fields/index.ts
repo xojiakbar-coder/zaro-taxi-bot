@@ -7,3 +7,4 @@ export { default as TimeInput } from './Time';
 export { default as Checkbox } from './Checkbox';
 export { default as RadioGroup } from './RadioGroup';
 export { default as DateTimePicker } from './DateTimePicker';
+export { default as DateTimePickerInput } from './DatePickerInput';

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import styles from './Layout.module.scss';
 import { BottomMenu } from '../BottomMenu/BottomMenu';
@@ -6,13 +7,17 @@ import { LuBadgeInfo } from 'react-icons/lu';
 import EmptyPage from '@/components/EmptyPage';
 
 import { useStoredUser, useUser } from '@/modules/order/hooks';
-import { useEffect } from 'react';
+import { useKeyboardStatus } from '@/common/utils/useKeyboardStatus';
 
 const Layout = () => {
   const user = useUser();
   const storedId = useStoredUser()?.id;
 
+  const isKeyboardOpen = useKeyboardStatus();
+
   useEffect(() => {}, [user]);
+
+  useEffect(() => {}, [isKeyboardOpen]);
 
   if (!storedId) {
     return (
@@ -32,7 +37,7 @@ const Layout = () => {
       <div className={styles.content}>
         <Outlet />
       </div>
-      <BottomMenu />
+      {!isKeyboardOpen && <BottomMenu />}
     </div>
   );
 };

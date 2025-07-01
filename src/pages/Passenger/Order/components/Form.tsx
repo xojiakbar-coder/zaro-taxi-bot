@@ -13,7 +13,7 @@ const Form = () => {
 
       <Spacer />
 
-      <Fields.DateInput
+      <Fields.DateTimePickerInput
         name="dateOfDeparture"
         label="Jo‘nash sanasi belgilang:"
         placeholder="Jo‘nash sana va vaqtini tanlang"
