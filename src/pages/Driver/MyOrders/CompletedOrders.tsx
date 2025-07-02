@@ -22,7 +22,10 @@ const CompletedOrders = () => {
         {completedRides?.length > 0 ? (
           completedRides.map(item => <DriverRideCard key={item.id} data={item} />)
         ) : (
-          <LuInbox className={styles.empty_icon} />
+          <div className={styles.empty_icon_wrapper}>
+            <LuInbox className={styles.empty_icon} />
+            <p className={styles.empty_subtitle}>Bajarilgan buyurtmalar yo'q</p>
+          </div>
         )}
       </div>
     </div>

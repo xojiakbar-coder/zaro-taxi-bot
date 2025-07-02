@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './Routes.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useRoutes } from '@/modules/routes/hooks';
@@ -14,10 +14,12 @@ import RoutesCard from '@/components/Card/RoutesCard/RoutesCard';
 const DriverRoutes = () => {
   const navigate = useNavigate();
   const { mutate } = useCreateRide();
-  const [allRidesIsCompleted, setAllRidesIsCompleted] = useState(false);
-  const { driver, isFetched } = useDriver();
   const [selectedItem, setSelectItem] = useState<number | null>(null);
+
+  const { driver, isFetched } = useDriver();
   const { routes, isLoading } = useRoutes();
+
+  const activeRide = driver?.recentRides.find(item => item.isCompleted === false);
 
   const onSubmit = () => {
     if (driver?.id && selectedItem !== null) {
@@ -26,16 +28,11 @@ const DriverRoutes = () => {
     }
   };
 
-  useEffect(() => {
-    const riedes = driver?.recentRides.find(items => items.isCompleted === true);
-    if (riedes) setAllRidesIsCompleted(true);
-  }, [driver?.recentRides[0]]);
-
-  if (driver?.recentRides[0] && !allRidesIsCompleted && !isFetched) {
-    return <EmptyPage icon={LuBadgeInfo} title="Siz allaqachon aktiv navbat bor" />;
+  if (isFetched && activeRide) {
+    return <EmptyPage icon={LuBadgeInfo} title="Siz allaqachon aktiv navbatdasiz" />;
   }
 
-  if (isLoading && isFetched) return <SpinnerLoader />;
+  if (isLoading || !isFetched) return <SpinnerLoader />;
 
   return (
     <div className={styles.container}>
