@@ -87,7 +87,7 @@ const Create: React.FC<IProps> = ({ children, onError, onSettled, onSuccess, cla
       isCashbackUsed: false,
       carType: undefined,
       dateOfDeparture: undefined,
-      timeOfDeparture: undefined,
+      timeOfDeparture: '',
       paymentType: undefined
     },
     resolver: yupResolver<FormValues, any, FormValues>(validationSchema)

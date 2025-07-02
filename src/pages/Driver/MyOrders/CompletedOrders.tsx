@@ -1,16 +1,29 @@
-import { Title } from '@mantine/core';
-
+import { useDriver } from '@/modules/driver/hooks';
 import styles from './MyOrders.module.scss';
-import { LuClipboard } from 'react-icons/lu';
+
+import { Title } from '@mantine/core';
+import { LuInbox } from 'react-icons/lu';
+import DriverRideCard from '@/components/Card/DriverRideCard/DriverRideCard';
+import SpinnerLoader from '@/components/Loader/Spinner';
 
 const CompletedOrders = () => {
+  const { driver, isFetched, isLoading } = useDriver();
+
+  const completedRides = driver.recentRides?.filter(ride => ride.isCompleted);
+
+  if (!isFetched && isLoading) return <SpinnerLoader />;
+
   return (
-    <div>
-      <Title order={4} className={styles.compledtedOrdersTitle}>
+    <div className={styles.completed_orders}>
+      <Title order={4} className={styles.completed_orders_title}>
         Buyurtmalar tarixi
       </Title>
-      <div className={styles.compledtedOrdersContent}>
-        <LuClipboard className="text-[40px]" />
+      <div className={styles.completed_orders_content}>
+        {completedRides?.length > 0 ? (
+          completedRides.map(item => <DriverRideCard key={item.id} data={item} />)
+        ) : (
+          <LuInbox className={styles.empty_icon} />
+        )}
       </div>
     </div>
   );

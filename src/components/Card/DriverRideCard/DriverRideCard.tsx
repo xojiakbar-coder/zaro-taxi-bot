@@ -2,20 +2,22 @@ import { useState } from 'react';
 import * as Types from '@/modules/driver/types';
 import styles from './DriverRideCard.module.scss';
 
-import { Badge, Button } from '@mantine/core';
+import { Badge, Button, Flex } from '@mantine/core';
+import { useCompleteRide } from '@/modules/driver/hooks';
 
 const DriverRideCard = ({
   data,
   mutation
 }: {
   data: Types.IEntity.RecentRide;
-  mutation: (params: { rideId: number }) => void;
+  mutation?: (params: { rideId: number }) => void;
 }) => {
+  const { mutate } = useCompleteRide();
   const [deletingId, setDeletingId] = useState<number | null>(null);
 
   const handleDeleteItem = (id: number) => {
     setDeletingId(id);
-    mutation({ rideId: id });
+    if (mutation) mutation({ rideId: id });
   };
 
   return (
@@ -23,8 +25,8 @@ const DriverRideCard = ({
       <div className={styles.top_content_wrapper}>
         <h3 className={styles.title}>Buyurtma ID: {data.id}</h3>
         {data !== null && data.driver && (
-          <Badge color="green" className={styles.badge}>
-            Aktiv
+          <Badge color={data.isCompleted ? 'orange' : 'green'} className={styles.badge}>
+            {data.isCompleted ? 'Bajarilgan' : 'Aktiv'}
           </Badge>
         )}
       </div>
@@ -60,34 +62,36 @@ const DriverRideCard = ({
           </div>
         ))}
 
-      {data && (
-        <Button
-          h={42}
-          mt="lg"
-          size="sm"
-          color="red"
-          w="max-content"
-          loading={deletingId === +data.id}
-          disabled={deletingId === +data.id}
-          onClick={() => handleDeleteItem(+data.id)}
-        >
-          Navbatni bekor qilish
-        </Button>
-      )}
+      <Flex direction="column" gap={8}>
+        {!data.isCompleted && (
+          <Button
+            h={42}
+            mt="lg"
+            size="sm"
+            color="red"
+            w="max-content"
+            loading={deletingId === +data.id}
+            disabled={deletingId === +data.id}
+            onClick={() => handleDeleteItem(+data.id)}
+          >
+            Navbatni bekor qilish
+          </Button>
+        )}
 
-      {data.bookings.length ? (
-        <Button
-          h={42}
-          size="sm"
-          color="teal"
-          w="max-content"
-          disabled={true}
-          loading={!data.id}
-          onClick={() => handleDeleteItem(+data.id)}
-        >
-          Safarni yakunlash
-        </Button>
-      ) : null}
+        {data.bookings.length > 0 ? (
+          <Button
+            h={42}
+            size="sm"
+            color="teal"
+            w="max-content"
+            loading={!data.id}
+            onClick={() => mutate()}
+            disabled={data.isCompleted}
+          >
+            Safarni yakunlash
+          </Button>
+        ) : null}
+      </Flex>
     </div>
   );
 };

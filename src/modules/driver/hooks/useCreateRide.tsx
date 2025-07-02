@@ -12,8 +12,8 @@ type IProps = {
   routeId: number;
 };
 
-const useCreateRide = () =>
-  useMutation<Types.IQuery.Single, string, IProps>({
+const useCreateRide = () => {
+  return useMutation<Types.IQuery.Single, string, IProps>({
     mutationFn: async ({ routeId, driverId }) => {
       if (!driverId) throw new Error('Driver ID is missing');
 
@@ -48,5 +48,6 @@ const useCreateRide = () =>
       });
     }
   });
+};
 
 export default useCreateRide;

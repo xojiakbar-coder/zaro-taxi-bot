@@ -9,11 +9,21 @@ import { CarTypeCard } from '@/components/Card/CarTypeCard';
 const Form = () => {
   return (
     <>
-      <Fields.DateTimePickerInput name="dateOfDeparture" label="Jo‘nash sanasi:" placeholder="Jo‘nash sana belgilang" />
+      <Fields.DateTimePickerInput
+        withAsterisk
+        name="dateOfDeparture"
+        label="Jo‘nash sanasi"
+        placeholder="Jo‘nash sanasini belgilang"
+      />
 
       <Spacer />
 
-      <Fields.TimeInput name="timeOfDeparture" label="Jo‘nash vaqti:" placeholder="Jo‘nash vaqtini belgilang" />
+      <Fields.TimeInput
+        withAsterisk
+        label="Jo‘nash vaqti"
+        name="timeOfDeparture"
+        placeholder="Jo‘nash vaqtini belgilang"
+      />
 
       <Spacer />
 
@@ -34,10 +44,10 @@ const Form = () => {
       <Spacer />
 
       <div className={styles.row_wrapper}>
-        <Fields.Chip name="isCashbackUsed" color="rgb(13, 49, 255)">
+        <Fields.Chip name="isCashbackUsed" color="teal">
           Keshbekni ishlatish
         </Fields.Chip>
-        <Fields.Chip name="frontSeat" color="rgb(13, 49, 255)">
+        <Fields.Chip name="frontSeat" color="teal">
           Oldingi o‘rindiqni band qilish
         </Fields.Chip>
       </div>

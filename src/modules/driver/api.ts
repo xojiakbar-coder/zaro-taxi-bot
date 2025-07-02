@@ -44,3 +44,7 @@ export const TariffCreate = ({ values }: { values: Types.IForm.Create }): AxiosP
 
   return http.request.post('/tariffs/driver-tariff/create/', formData);
 };
+
+export const CompleteRide = ({ telegramId }: { telegramId: string }): AxiosPromise<Types.IApi.Single.Response> => {
+  return http.request.post(`/driver/complete-ride/?telegram_id=${telegramId}`);
+};

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Routes.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useRoutes } from '@/modules/routes/hooks';
@@ -14,9 +14,10 @@ import RoutesCard from '@/components/Card/RoutesCard/RoutesCard';
 const DriverRoutes = () => {
   const navigate = useNavigate();
   const { mutate } = useCreateRide();
+  const [allRidesIsCompleted, setAllRidesIsCompleted] = useState(false);
   const { driver, isFetched } = useDriver();
   const [selectedItem, setSelectItem] = useState<number | null>(null);
-  const { routes, isLoading, isSuccess: isRoutesSuccess } = useRoutes();
+  const { routes, isLoading } = useRoutes();
 
   const onSubmit = () => {
     if (driver?.id && selectedItem !== null) {
@@ -25,7 +26,12 @@ const DriverRoutes = () => {
     }
   };
 
-  if (driver?.recentRides[0] && isRoutesSuccess) {
+  useEffect(() => {
+    const riedes = driver?.recentRides.find(items => items.isCompleted === true);
+    if (riedes) setAllRidesIsCompleted(true);
+  }, [driver?.recentRides[0]]);
+
+  if (driver?.recentRides[0] && !allRidesIsCompleted && !isFetched) {
     return <EmptyPage icon={LuBadgeInfo} title="Siz allaqachon aktiv navbat bor" />;
   }
 

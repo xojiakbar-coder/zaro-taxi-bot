@@ -1,9 +1,10 @@
 .container {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   padding: 30px 24px;
   gap: 24px;
-  height: max-content;
-  min-height: var(--max-height);
+  height: 100%;
 
   @media (max-width: 768px) {
     padding: 20px 8px;
