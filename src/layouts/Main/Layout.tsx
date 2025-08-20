@@ -1,34 +1,65 @@
-import { useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
 import styles from './Layout.module.scss';
 import { BottomMenu } from '../BottomMenu/BottomMenu';
 
 import { LuBadgeInfo } from 'react-icons/lu';
 import EmptyPage from '@/components/EmptyPage';
-
-import { useStoredUser, useUser } from '@/modules/order/hooks';
 import { useKeyboardStatus } from '@/common/utils/useKeyboardStatus';
 
-const Layout = () => {
-  const user = useUser();
-  const storedId = useStoredUser()?.id;
+import * as Types from '@/modules/order/types';
 
+const Layout = () => {
+  const { hash } = useLocation();
   const isKeyboardOpen = useKeyboardStatus();
 
-  useEffect(() => {}, [user]);
+  const [user, setUser] = useState<Types.IEntity.User | null>(null);
 
-  useEffect(() => {}, [isKeyboardOpen]);
+  useEffect(() => {
+    if (!hash.startsWith('#tgWebAppData=')) {
+      const stored = localStorage.getItem('telegramUser');
+      if (stored) {
+        try {
+          const parsedUser = JSON.parse(stored) as Types.IEntity.User;
+          setUser(parsedUser);
+        } catch (e) {
+          console.error('Error parsing stored user JSON:', e);
+        }
+      }
+      return;
+    }
 
-  if (!storedId) {
+    try {
+      const rawData = hash.replace('#tgWebAppData=', '');
+      const decoded = decodeURIComponent(rawData);
+
+      const params = new URLSearchParams(decoded);
+      const userRaw = params.get('user');
+
+      if (userRaw) {
+        const userJson = decodeURIComponent(userRaw);
+        const parsedUser = JSON.parse(userJson) as Types.IEntity.User;
+
+        localStorage.setItem('telegramUser', JSON.stringify(parsedUser));
+        setUser(parsedUser);
+      }
+    } catch (error) {
+      console.error('Failed to parse Telegram user data:', error);
+    }
+  }, [hash]);
+
+  if (!user) {
     return (
-      <EmptyPage
-        fullHeight={true}
-        icon={LuBadgeInfo}
-        title="Ma'lumotlar topilmadi"
-        buttonContent="Biz bilan bog'lanish"
-        externalLink="https://t.me/murodov_azizmurod"
-        subtitle={`Bu holat uchun biz bilan bog'lanishingiz mumkin. ${storedId} ${user?.id}`}
-      />
+      <>
+        <EmptyPage
+          fullHeight
+          icon={LuBadgeInfo}
+          title={`Foydalanuvchi topilmadi`}
+          buttonContent={`Biz bilan bog'lanish`}
+          externalLink="https://t.me/murodov_azizmurod"
+          subtitle={`hash: ${hash}`}
+        />
+      </>
     );
   }
 

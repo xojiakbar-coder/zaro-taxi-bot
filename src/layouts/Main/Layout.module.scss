@@ -10,3 +10,16 @@
   min-height: var(--max-height);
   max-height: var(--max-height);
 }
+
+.debugBanner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #111;
+  color: #0f0;
+  font-size: 12px;
+  padding: 4px 8px;
+  z-index: 9999;
+  opacity: 0.9;
+}

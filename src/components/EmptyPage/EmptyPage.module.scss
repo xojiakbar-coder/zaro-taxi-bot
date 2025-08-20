@@ -30,6 +30,9 @@
 
 .subtitle {
   font-size: 14px;
+  padding: 14px;
+  word-break: break-all; /* yoki break-word */
+  overflow-wrap: anywhere; /* so‘z bo‘linishiga ruxsat */
 }
 
 .button {
