@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import styles from './BottomMenu.module.scss';
+import styles from './SubMenu.module.scss';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useIsDriver } from '@/common/utils/useIsDriver';
 import { LuCirclePlus, LuCircleUser, LuShoppingCart } from 'react-icons/lu';
 
-export const BottomMenu = () => {
+const BottomMenu = () => {
   const location = useLocation();
   const isDriver = useIsDriver();
 
@@ -46,3 +46,5 @@ export const BottomMenu = () => {
     </div>
   );
 };
+
+export default BottomMenu;

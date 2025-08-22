@@ -1,5 +1,5 @@
 import Home from '@/pages/Home/Home';
-import Layout from '@/layouts/Main/Layout';
+import Layout from '@/layouts/Main/Main';
 import Driver from '@/pages/Driver/Driver/Driver';
 import Create from '@/pages/Driver/Driver/Create';
 import OrderPage from '@/pages/Passenger/Order/Create';

@@ -11,10 +11,15 @@ const useUser = (): Types.IEntity.User | null => {
       const stored = localStorage.getItem('telegramUser');
       if (stored) {
         try {
-          const parsedUser = JSON.parse(stored) as Types.IEntity.User;
-          setUser(parsedUser);
+          if (stored.startsWith('{')) {
+            const parsedUser = JSON.parse(stored) as Types.IEntity.User;
+            setUser(parsedUser);
+          } else {
+            console.warn('Noto‘g‘ri foydalanuvchi id:', stored);
+          }
         } catch (e) {
           console.error('Error parsing stored user JSON:', e);
+          localStorage.removeItem('telegramUser');
         }
       }
       return;

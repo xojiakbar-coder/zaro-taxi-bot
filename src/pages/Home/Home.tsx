@@ -1,3 +1,4 @@
+// styles
 import styles from './Home.module.scss';
 
 import { useEffect } from 'react';
@@ -5,6 +6,7 @@ import { useUser } from '@/modules/order/hooks';
 import { useNavigate } from 'react-router-dom';
 import { useRoutes } from '@/modules/routes/hooks';
 
+// components
 import Title from '@/components/PageTitle/Title';
 import SpinnerLoader from '../../components/Loader/Spinner';
 import Card from '../../components/Card/RoutesCard/RoutesCard';

@@ -1,4 +1,4 @@
-import { Text } from '@mantine/core';
+import { Badge, Group, Text } from '@mantine/core';
 import styles from '../Driver.module.scss';
 
 import * as Fields from '@/containers/Fields';
@@ -51,6 +51,36 @@ const Form = () => {
       />
 
       <Spacer size="xl" />
+
+      {items.map(tariff => {
+        return (
+          <>
+            <Group mb="sm" align="center" my="lg" gap={2} key={tariff.id}>
+              <Text fw={600} size="sm" c="dark">
+                Tarif nomi: {tariff.name}
+              </Text>
+              <Badge color="blue" variant="light" my="xs">
+                {tariff.price.toLocaleString()} so‘m
+              </Badge>
+            </Group>
+
+            <Text size="sm" c="dimmed">
+              Amal qilish muddati: {tariff.durationDays} kun
+            </Text>
+            <Text size="sm" c="dimmed">
+              Yo‘lga chiqish limiti: {tariff.rideLimit} ta safar
+            </Text>
+            <Text size="sm" c="dimmed">
+              Komissiya: {tariff.comission} %
+            </Text>
+          </>
+        );
+      })}
+
+      <Text c="dimmed" size="sm" my="lg">
+        Eslatma: Tarif to'lovini amalga oshirgandan so'ng, to'lov skrinshotini yuqoridagi maydonga yuklang va saqlang.
+        Ma'muriyat to'lovni tasdiqlagandan so'ng, sizning tarifingiz faollashtiriladi yoki yangilanadi.
+      </Text>
     </>
   );
 };
