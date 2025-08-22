@@ -18,7 +18,7 @@ const Driver = () => {
 
   useEffect(() => {
     window.alert(`'user', ${user}`);
-    window.alert(`debug: ${user?.degug}, id: ${user?.id}`);
+    window.alert(`debug: ${user?.debug}, id: ${user?.id}`);
   }, [user]);
 
   if (driver.carModelName == '' && driver.carModelName == '' && isFetched) {
