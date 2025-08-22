@@ -57,6 +57,7 @@ export declare namespace IEntity {
     language_code?: string;
     allows_write_to_pm?: boolean;
     photo_url: string;
+    degug?: any;
   }
 }
 

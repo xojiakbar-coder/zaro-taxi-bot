@@ -7,7 +7,7 @@ export const Tariff = (src?: any): Types.IEntity.Tariff => ({
   updatedAt: get(src, 'updatedAt', ''),
   name: get(src, 'name', ''),
   price: get(src, 'price', 0),
-  durationDays: get(src, 'durationDays', 0),
-  rideLimit: get(src, 'rideLimit', 0),
+  durationDays: get(src, 'duration_days', 0),
+  rideLimit: get(src, 'ride_limit', 0),
   comission: get(src, 'comission', 0)
 });

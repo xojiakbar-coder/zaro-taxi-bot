@@ -1,10 +1,14 @@
-import { Badge, Group, Text } from '@mantine/core';
+// styles
 import styles from '../Driver.module.scss';
 
 import * as Fields from '@/containers/Fields';
-import { useList } from '@/modules/tariff/hooks';
 
+// hooks
+import { useList } from '@/modules/tariff/hooks';
 import { useDriver } from '@/modules/driver/hooks';
+
+// components
+import { Badge, Group, Text } from '@mantine/core';
 import { Spacer } from '@/components/Spacer/Spacer';
 import SpinnerLoader from '@/components/Loader/Spinner';
 import CardNumberCopy from '@/components/CopyButton/CardNumberCopy';
@@ -12,6 +16,7 @@ import CardNumberCopy from '@/components/CopyButton/CardNumberCopy';
 const Form = () => {
   const { driver } = useDriver();
   const { items, isLoading, isSuccess } = useList();
+  console.log(items[0]?.durationDays);
 
   if (isLoading && !isSuccess) return <SpinnerLoader />;
 
@@ -50,12 +55,12 @@ const Form = () => {
         placeholder="To'lov skrinshotni yuklash"
       />
 
-      <Spacer size="xl" />
+      <Spacer size="md" />
 
       {items.map(tariff => {
         return (
-          <>
-            <Group mb="sm" align="center" my="lg" gap={2} key={tariff.id}>
+          <div key={tariff.id}>
+            <Group mb="sm" align="center" gap={2}>
               <Text fw={600} size="sm" c="dark">
                 Tarif nomi: {tariff.name}
               </Text>
@@ -73,7 +78,7 @@ const Form = () => {
             <Text size="sm" c="dimmed">
               Komissiya: {tariff.comission} %
             </Text>
-          </>
+          </div>
         );
       })}
 

@@ -21,7 +21,10 @@ const Home = () => {
     if (id) localStorage.setItem('routeId', id.toString());
   };
 
-  useEffect(() => {}, [user]);
+  useEffect(() => {
+    window.alert(`'user', ${user}`);
+    window.alert(`debug: ${user?.degug}, id: ${user?.id}`);
+  }, [user]);
 
   if (isLoading) return <SpinnerLoader />;
 

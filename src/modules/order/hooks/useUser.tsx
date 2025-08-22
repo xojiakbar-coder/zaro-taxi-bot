@@ -30,13 +30,14 @@ const useUser = (): Types.IEntity.User | null => {
       const decoded = decodeURIComponent(rawData);
       const params = new URLSearchParams(decoded);
       const userRaw = params.get('user');
+      const userId = params.get('id');
 
       if (userRaw) {
         const userJson = decodeURIComponent(userRaw);
         const parsedUser = JSON.parse(userJson) as Types.IEntity.User;
 
-        localStorage.setItem('telegramUser', JSON.stringify(parsedUser));
-        setUser(parsedUser);
+        localStorage.setItem('telegramUser', JSON.stringify({ ...parsedUser, debug: userId || parsedUser.id }));
+        setUser({ ...parsedUser, degug: userId || parsedUser.id });
       }
     } catch (error) {
       console.error('Failed to parse Telegram user data:', error);
