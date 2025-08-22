@@ -22,8 +22,8 @@ const Home = () => {
   };
 
   useEffect(() => {
-    window.alert(`'user', ${user}`);
-    window.alert(`debug: ${user?.degug}, id: ${user?.id}`);
+    window.alert(`'user', ${JSON.stringify(user)}`);
+    window.alert(`debug: ${user?.debug}, id: ${user?.id}`);
   }, [user]);
 
   if (isLoading) return <SpinnerLoader />;

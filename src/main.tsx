@@ -19,6 +19,17 @@ window.addEventListener('vite:preloadError', () => {
   window.location.reload();
 });
 
+// app.tsx yoki index.tsx ning eng boshida qo‘ying
+const originalConsoleError = console.error;
+
+console.error = function (...args) {
+  // Avval odatdagidek console-ga yozadi
+  originalConsoleError.apply(console, args);
+
+  // Keyin alert chiqaradi
+  alert(args.map(a => (typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a))).join('\n'));
+};
+
 const showApiError = (error: any) => {
   const data = getApiError(error);
 

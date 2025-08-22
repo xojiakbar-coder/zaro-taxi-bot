@@ -37,7 +37,7 @@ const useUser = (): Types.IEntity.User | null => {
         const parsedUser = JSON.parse(userJson) as Types.IEntity.User;
 
         localStorage.setItem('telegramUser', JSON.stringify({ ...parsedUser, debug: userId || parsedUser.id }));
-        setUser({ ...parsedUser, degug: userId || parsedUser.id });
+        setUser({ ...parsedUser, debug: userId || parsedUser.id });
       }
     } catch (error) {
       console.error('Failed to parse Telegram user data:', error);
