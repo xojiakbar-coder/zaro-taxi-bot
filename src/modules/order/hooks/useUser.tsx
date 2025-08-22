@@ -11,15 +11,10 @@ const useUser = (): Types.IEntity.User | null => {
       const stored = localStorage.getItem('telegramUser');
       if (stored) {
         try {
-          if (stored.startsWith('{')) {
-            const parsedUser = JSON.parse(stored) as Types.IEntity.User;
-            setUser(parsedUser);
-          } else {
-            console.warn('Noto‘g‘ri foydalanuvchi id:', stored);
-          }
+          const parsedUser = JSON.parse(stored) as Types.IEntity.User;
+          setUser(parsedUser);
         } catch (e) {
           console.error('Error parsing stored user JSON:', e);
-          localStorage.removeItem('telegramUser');
         }
       }
       return;
@@ -30,14 +25,19 @@ const useUser = (): Types.IEntity.User | null => {
       const decoded = decodeURIComponent(rawData);
       const params = new URLSearchParams(decoded);
       const userRaw = params.get('user');
-      const userId = params.get('id');
 
       if (userRaw) {
         const userJson = decodeURIComponent(userRaw);
         const parsedUser = JSON.parse(userJson) as Types.IEntity.User;
 
-        localStorage.setItem('telegramUser', JSON.stringify({ ...parsedUser, debug: userId || parsedUser.id }));
-        setUser({ ...parsedUser, debug: userId || parsedUser.id });
+        // LocalStorage'ga saqlash
+        localStorage.setItem('telegramUser', JSON.stringify(parsedUser));
+
+        // Saqlangan qiymatni tekshirish
+        const saved = localStorage.getItem('telegramUser');
+        console.log('Saved telegramUser:', saved);
+
+        setUser(parsedUser);
       }
     } catch (error) {
       console.error('Failed to parse Telegram user data:', error);

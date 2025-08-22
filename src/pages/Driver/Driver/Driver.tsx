@@ -16,10 +16,7 @@ const Driver = () => {
   const navigate = useNavigate();
   const { driver, isLoading, isFetched } = useDriver();
 
-  useEffect(() => {
-    window.alert(`'user', ${user}`);
-    window.alert(`debug: ${user?.debug}, id: ${user?.id}`);
-  }, [user]);
+  useEffect(() => {}, [user]);
 
   if (driver.carModelName == '' && driver.carModelName == '' && isFetched) {
     return (
