@@ -14,7 +14,7 @@ import Card from '../../components/Card/RoutesCard/RoutesCard';
 const Home = () => {
   const user = useUser();
   const navigate = useNavigate();
-  const { routes, isLoading } = useRoutes();
+  const { routes, isLoading, isFetched } = useRoutes();
 
   const handleCardClick = (id: number) => {
     navigate(`/orders/${id}`);
@@ -26,7 +26,7 @@ const Home = () => {
     window.alert(`debug: ${user?.debug}, id: ${user?.id}`);
   }, [user]);
 
-  if (isLoading) return <SpinnerLoader />;
+  if (isLoading && !isFetched) return <SpinnerLoader />;
 
   return (
     <div className={styles.container}>

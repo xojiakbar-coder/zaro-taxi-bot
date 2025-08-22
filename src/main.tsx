@@ -2,11 +2,11 @@ import './assets/styles/main.css';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
-import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import Router from './routes/router';
 
@@ -82,7 +82,7 @@ const queryClient = new QueryClient({
 });
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+  <ErrorBoundary fallback={<div>Something went wrong</div>}>
     <QueryClientProvider client={queryClient}>
       <MantineProvider>
         <ModalsProvider>
@@ -93,5 +93,5 @@ createRoot(document.getElementById('root')!).render(
         </ModalsProvider>
       </MantineProvider>
     </QueryClientProvider>
-  </StrictMode>
+  </ErrorBoundary>
 );
